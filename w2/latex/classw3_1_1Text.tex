@@ -1,0 +1,105 @@
+\hypertarget{classw3_1_1Text}{}\section{w3\+:\+:Text Class Reference}
+\label{classw3_1_1Text}\index{w3\+::\+Text@{w3\+::\+Text}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classw3_1_1Text_a246f1f28a131ed236fe0855ee52675c8}{Text}} ()
+\item 
+\mbox{\hyperlink{classw3_1_1Text_aa81c2b7009d35ff78c0e0937093ef7fd}{Text}} (const std\+::string a\+File)
+\item 
+\mbox{\hyperlink{classw3_1_1Text_a31ae34f225b1ba9996030fb9654b1c99}{Text}} (const \mbox{\hyperlink{classw3_1_1Text}{Text}} \&a\+Text)
+\item 
+\mbox{\hyperlink{classw3_1_1Text_a87c28dfc63a709ead728be4a6d3308b4}{Text}} (\mbox{\hyperlink{classw3_1_1Text}{Text}} \&\&a\+Text)
+\item 
+\mbox{\hyperlink{classw3_1_1Text}{Text}} \& \mbox{\hyperlink{classw3_1_1Text_afedee168a1c51e33ff7ee514c4e644eb}{operator=}} (const \mbox{\hyperlink{classw3_1_1Text}{Text}} \&a\+Text)
+\item 
+\mbox{\hyperlink{classw3_1_1Text}{Text}} \& \mbox{\hyperlink{classw3_1_1Text_a0cdbe0667f1d75b600276ec718ab2520}{operator=}} (\mbox{\hyperlink{classw3_1_1Text}{Text}} \&\&a\+Text)
+\item 
+\mbox{\hyperlink{classw3_1_1Text_a599c6614ba05c4cbd3ef9b8968a73ad4}{$\sim$\+Text}} ()
+\item 
+void \mbox{\hyperlink{classw3_1_1Text_a0e6babcf3bf4a249883e9930964f1341}{init}} (const \mbox{\hyperlink{classw3_1_1Text}{Text}} \&a\+Text)
+\item 
+void \mbox{\hyperlink{classw3_1_1Text_a9e64abcee5332f985714f735f603a249}{init}} (\mbox{\hyperlink{classw3_1_1Text}{Text}} \&\&a\+Text)
+\item 
+int \mbox{\hyperlink{classw3_1_1Text_a2545c8cbf902b0addb4ba509872ce6a9}{get\+Size}} (const std\+::string, bool save=false)
+\item 
+size\+\_\+t \mbox{\hyperlink{classw3_1_1Text_aa738305950f5a5def3c56b98dcc5e14a}{size}} () const
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classw3_1_1Text_a246f1f28a131ed236fe0855ee52675c8}\label{classw3_1_1Text_a246f1f28a131ed236fe0855ee52675c8}} 
+\index{w3\+::\+Text@{w3\+::\+Text}!Text@{Text}}
+\index{Text@{Text}!w3\+::\+Text@{w3\+::\+Text}}
+\subsubsection{\texorpdfstring{Text()}{Text()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily w3\+::\+Text\+::\+Text (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Default Constructor to instantiating an empty state \mbox{\Hypertarget{classw3_1_1Text_aa81c2b7009d35ff78c0e0937093ef7fd}\label{classw3_1_1Text_aa81c2b7009d35ff78c0e0937093ef7fd}} 
+\index{w3\+::\+Text@{w3\+::\+Text}!Text@{Text}}
+\index{Text@{Text}!w3\+::\+Text@{w3\+::\+Text}}
+\subsubsection{\texorpdfstring{Text()}{Text()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily w3\+::\+Text\+::\+Text (\begin{DoxyParamCaption}\item[{const std\+::string}]{a\+File }\end{DoxyParamCaption})}
+
+One string argument constructor to store contents of file parameter in \mbox{\hyperlink{classw3_1_1Text}{Text}} object. \mbox{\Hypertarget{classw3_1_1Text_a31ae34f225b1ba9996030fb9654b1c99}\label{classw3_1_1Text_a31ae34f225b1ba9996030fb9654b1c99}} 
+\index{w3\+::\+Text@{w3\+::\+Text}!Text@{Text}}
+\index{Text@{Text}!w3\+::\+Text@{w3\+::\+Text}}
+\subsubsection{\texorpdfstring{Text()}{Text()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily w3\+::\+Text\+::\+Text (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classw3_1_1Text}{Text}} \&}]{a\+Text }\end{DoxyParamCaption})}
+
+Copy constructor, instantiating a new instance of \mbox{\hyperlink{classw3_1_1Text}{Text}} object using copied data from a\+Text parameter. \mbox{\Hypertarget{classw3_1_1Text_a87c28dfc63a709ead728be4a6d3308b4}\label{classw3_1_1Text_a87c28dfc63a709ead728be4a6d3308b4}} 
+\index{w3\+::\+Text@{w3\+::\+Text}!Text@{Text}}
+\index{Text@{Text}!w3\+::\+Text@{w3\+::\+Text}}
+\subsubsection{\texorpdfstring{Text()}{Text()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily w3\+::\+Text\+::\+Text (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classw3_1_1Text}{Text}} \&\&}]{a\+Text }\end{DoxyParamCaption})}
+
+Move constructor, instantiating a new instance of \mbox{\hyperlink{classw3_1_1Text}{Text}} object using an R value parameter. \mbox{\Hypertarget{classw3_1_1Text_a599c6614ba05c4cbd3ef9b8968a73ad4}\label{classw3_1_1Text_a599c6614ba05c4cbd3ef9b8968a73ad4}} 
+\index{w3\+::\+Text@{w3\+::\+Text}!````~Text@{$\sim$\+Text}}
+\index{````~Text@{$\sim$\+Text}!w3\+::\+Text@{w3\+::\+Text}}
+\subsubsection{\texorpdfstring{$\sim$\+Text()}{~Text()}}
+{\footnotesize\ttfamily w3\+::\+Text\+::$\sim$\+Text (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Destructor, releasing dynamic memory from instance of std\+::string texts. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classw3_1_1Text_a2545c8cbf902b0addb4ba509872ce6a9}\label{classw3_1_1Text_a2545c8cbf902b0addb4ba509872ce6a9}} 
+\index{w3\+::\+Text@{w3\+::\+Text}!get\+Size@{get\+Size}}
+\index{get\+Size@{get\+Size}!w3\+::\+Text@{w3\+::\+Text}}
+\subsubsection{\texorpdfstring{get\+Size()}{getSize()}}
+{\footnotesize\ttfamily int w3\+::\+Text\+::get\+Size (\begin{DoxyParamCaption}\item[{const std\+::string}]{a\+File,  }\item[{bool}]{save = {\ttfamily false} }\end{DoxyParamCaption})}
+
+Function that gets size of the records inside a text file; option to save those contents \mbox{\Hypertarget{classw3_1_1Text_a0e6babcf3bf4a249883e9930964f1341}\label{classw3_1_1Text_a0e6babcf3bf4a249883e9930964f1341}} 
+\index{w3\+::\+Text@{w3\+::\+Text}!init@{init}}
+\index{init@{init}!w3\+::\+Text@{w3\+::\+Text}}
+\subsubsection{\texorpdfstring{init()}{init()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void w3\+::\+Text\+::init (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classw3_1_1Text}{Text}} \&}]{a\+Text }\end{DoxyParamCaption})}
+
+Resource handling for copy assignment operator and copy constructor \mbox{\Hypertarget{classw3_1_1Text_a9e64abcee5332f985714f735f603a249}\label{classw3_1_1Text_a9e64abcee5332f985714f735f603a249}} 
+\index{w3\+::\+Text@{w3\+::\+Text}!init@{init}}
+\index{init@{init}!w3\+::\+Text@{w3\+::\+Text}}
+\subsubsection{\texorpdfstring{init()}{init()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void w3\+::\+Text\+::init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classw3_1_1Text}{Text}} \&\&}]{a\+Text }\end{DoxyParamCaption})}
+
+Resource handling for move assignment operator and move constructor \mbox{\Hypertarget{classw3_1_1Text_afedee168a1c51e33ff7ee514c4e644eb}\label{classw3_1_1Text_afedee168a1c51e33ff7ee514c4e644eb}} 
+\index{w3\+::\+Text@{w3\+::\+Text}!operator=@{operator=}}
+\index{operator=@{operator=}!w3\+::\+Text@{w3\+::\+Text}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classw3_1_1Text}{Text}} \& w3\+::\+Text\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classw3_1_1Text}{Text}} \&}]{a\+Text }\end{DoxyParamCaption})}
+
+Copy assignment operator, copying new data to a pre-\/existing \mbox{\hyperlink{classw3_1_1Text}{Text}} object. \mbox{\Hypertarget{classw3_1_1Text_a0cdbe0667f1d75b600276ec718ab2520}\label{classw3_1_1Text_a0cdbe0667f1d75b600276ec718ab2520}} 
+\index{w3\+::\+Text@{w3\+::\+Text}!operator=@{operator=}}
+\index{operator=@{operator=}!w3\+::\+Text@{w3\+::\+Text}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classw3_1_1Text}{Text}} \& w3\+::\+Text\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classw3_1_1Text}{Text}} \&\&}]{a\+Text }\end{DoxyParamCaption})}
+
+Move assignment operator, copying new data from an R value \mbox{\hyperlink{classw3_1_1Text}{Text}} object to a pre-\/existing \mbox{\hyperlink{classw3_1_1Text}{Text}} object. \mbox{\Hypertarget{classw3_1_1Text_aa738305950f5a5def3c56b98dcc5e14a}\label{classw3_1_1Text_aa738305950f5a5def3c56b98dcc5e14a}} 
+\index{w3\+::\+Text@{w3\+::\+Text}!size@{size}}
+\index{size@{size}!w3\+::\+Text@{w3\+::\+Text}}
+\subsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily size\+\_\+t w3\+::\+Text\+::size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Function that gets size expressed in bytes. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Text.\+h\item 
+Text.\+cpp\end{DoxyCompactItemize}

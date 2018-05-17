@@ -1,0 +1,240 @@
+Script started on Wed 21 Feb 2018 06:20:45 PM EST
+thsaulon@matrix:~/Courses/OOP345/w4> whoami
+thsaulon
+thsaulon@matrix:~/Courses/OOP345/w4> cat Notifications.cpp
+#include "Notifications.h"
+
+
+namespace w5
+{
+	Notifications::Notifications() : messages{ nullptr }, amntMsg{ 0 } {}
+
+	Notifications::Notifications(const Notifications& newObject)
+	{
+		this->init(newObject);
+	}
+
+	Notifications& Notifications::operator=(const Notifications& newObject)
+	{
+		if (this != &newObject)
+		{
+			delete[] this->messages;
+			this->init(newObject);
+		}
+
+		return *this;
+	}
+
+	void Notifications::init(const Notifications& newObject)
+	{
+		this->amntMsg = newObject.amntMsg;
+		if (newObject.messages != nullptr)
+		{
+			this->messages = new Message[max_num_msg];
+			for (size_t i = 0; i < this->amntMsg; i++)
+			{
+				this->messages[i] = newObject.messages[i];
+			}
+		}
+		else
+		{
+			this->messages = nullptr;
+		}
+	}
+
+	Notifications::Notifications(Notifications&& newObject)
+	{
+		this->messages = nullptr;
+		*this = std::move(newObject);
+	}
+
+	Notifications& Notifications::operator=(Notifications&& newObject)
+	{
+
+		if (this != &newObject)
+		{
+			delete[] this->messages;
+
+			this->messages = newObject.messages;
+			this->amntMsg = newObject.amntMsg;
+
+			newObject.messages = nullptr;
+			newObject.amntMsg = 0;
+		}
+
+		return *this;
+	}
+
+	Notifications::~Notifications()
+	{
+		delete[] this->messages;
+	}
+
+	void Notifications::operator+=(const Message& msg)
+	{
+		if (this->messages == nullptr)
+		{
+			this->messages = new Message[max_num_msg];
+		}
+
+		if (this->amntMsg < max_num_msg)
+		{
+			this->messages[amntMsg] = msg;
+			this->amntMsg++;
+		}
+
+	}
+
+	void Notifications::display(std::ostream& os) const
+	{
+		for (size_t i = 0; i < this->amntMsg; i++)
+		{
+			this->messages[i].display(os);
+			os << std::endl;
+		}
+	}
+
+}
+thsaulon@matrix:~/Courses/OOP345/w4> cat Message.cpp
+#include "Message.h"
+#include <iostream>
+
+namespace w5
+{
+	Message::Message()
+	{
+		this->msg.clear();
+		this->fromUser.clear();
+		this->replyTo.clear();
+	}
+
+	Message::Message(std::ifstream& in, char c)
+	{
+		std::getline(in, this->fromUser, ' ');
+
+		if (in.peek() == '@')
+		{
+			in.get();
+			std::getline(in, this->replyTo, ' ');
+		}
+
+		std::getline(in, this->msg, c);
+
+		//check if we extracted a newline character
+		if (checkChar(this->fromUser, '\n'))
+		{
+			//remove previous fromUser extracted
+			this->fromUser.assign(this->fromUser.substr((this->fromUser.find('\n') + 1), this->fromUser.length()));
+		}
+	}
+
+	Message::~Message()
+	{
+	}
+
+	void Message::display(std::ostream&) const
+	{
+		if (!this->msg.empty())
+		{
+			std::cout << "Message" << std::endl;
+			std::cout << "\tUser\t:\t" << this->fromUser << std::endl;
+			if (!this->replyTo.empty())
+			{
+				std::cout << "\tReply\t:\t" << this->replyTo << std::endl;
+			}
+			std::cout << "\tTweet\t:\t" << this->msg << std::endl;
+		}
+
+	}
+
+	bool Message::checkChar(const std::string& aString, char check) const
+	{
+		bool replyExists = false;
+
+		for (size_t i = 0; i < aString.length(); i++)
+		{
+			if (aString[i] == check)
+			{
+				replyExists = true;
+			}
+		}
+
+		return replyExists;
+	}
+}
+thsaulon@matrix:~/Courses/OOP345/w4> cat w5.cpp
+// Workshop 5 - Containers
+// w5.cpp
+
+#include <iostream>
+#include <fstream>
+#include "Message.h"
+#include "Notifications.h"
+
+const char REC_DELIMITER = '\n';
+
+w5::Notifications collect(std::ifstream& in, char recDelim) {
+	w5::Notifications notifications;
+
+	do {
+		w5::Message message(in, recDelim);
+		if (!message.empty())
+			notifications += std::move(message);
+	} while (in);
+
+	return notifications;
+}
+
+int main(int argc, char* argv[]) {
+	if (argc == 1) {
+		std::cerr << argv[0] << ": missing file operand\n";
+		return 1;
+	}
+	else if (argc != 2) {
+		std::cerr << argv[0] << ": too many arguments\n";
+		return 2;
+	}
+	std::ifstream file(argv[1]);
+	if (!file) {
+		std::cerr << argv[0] << "\n: Failed to open " << argv[1] << "\n";
+		return 3;
+	}
+
+	std::cout << "\nNotifications\n=============\n\n";
+	w5::Notifications notifications = collect(file, REC_DELIMITER);
+
+	notifications.display(std::cout);
+
+	std::cout << "Press any key to continue ... ";
+	std::cin.get();
+}thsaulon@matrix:~/Courses/OOP345/w4> cat w5.cppMessage.cppNotifications.cppwhoami[K[2Pexitcat w5.cpp[4Pwhoamicat w4.txtls[Kclear[3Plscd Courses/OOP345/w3k3ls[Kclearat w4.txtls[Kmv w3.txt w4.txtls[Kscript w3.txt[8Pclear[3Plsdoxygen Doxyfile-g[Kls[Ka.outw4.cpp[4Plsclearg++ -o a.out -std=c++0x w4.cppls[Kclear[3Plsg++ -o a.out -std=c++0x w4.cppclear[Kg++ -o a.out -std=c++0x w4.cpp[K[K[K[K[K5.cpp [C[1P[1P[1P[1P[1P[1@w[1@5[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[CMessage.cpp Not ifications.cpp
+thsaulon@matrix:~/Courses/OOP345/w4> w5 w5_test.dat
+
+Notifications
+=============
+
+Message
+	User	:	jim
+	Tweet	:	Workshop 5 is cool
+
+Message
+	User	:	harry
+	Reply	:	jim
+	Tweet	:	working on workshop 5 now
+
+Message
+	User	:	dave
+	Tweet	:	what the ^#$%!
+
+Message
+	User	:	john
+	Reply	:	harry
+	Tweet	:	I'm done
+
+Press any key to continue ... 
+thsaulon@matrix:~/Courses/OOP345/w4> w1[K5
+w5: missing file operand
+thsaulon@matrix:~/Courses/OOP345/w4> exit
+exit
+
+Script done on Wed 21 Feb 2018 06:22:19 PM EST

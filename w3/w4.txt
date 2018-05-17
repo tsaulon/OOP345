@@ -1,0 +1,220 @@
+Script started on Sun 11 Feb 2018 04:36:42 PM EST
+thsaulon@matrix:~/Courses/OOP345/w3> whoami
+thsaulon
+thsaulon@matrix:~/Courses/OOP345/w3> cat w4.cpp
+// Workshop 4 - Templates
+// w4.cpp
+
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include "KVList.h"
+
+
+template <typename K, typename V, int N>
+void display(const std::string& msg, const KVList<K, V, N>& list, int w) {
+	std::cout << msg;
+	for (int i = 0; i < list.size(); i++)
+		std::cout << std::setw(w) << list.key(i)
+		<< " : " << list.value(i) << std::endl;
+}
+
+int main(int argc, char** argv) {
+	if (argc != 1) {
+		std::cerr << argv[0] << ": too many arguments\n";
+		return 1;
+	}
+
+	int width;
+	bool keepreading;
+	std::cout << std::fixed << std::setprecision(2);
+
+	std::cout << "\nInventory\n=========\n";
+	KVList <std::string, double, 5> inventory;
+	std::string str;
+	double price;
+
+	keepreading = true;
+	do {
+		std::cout << "Product : ";
+		getline(std::cin, str);
+		if (str.compare("quit") == 0) {
+			keepreading = false;
+		}
+		else {
+			std::cout << "Price : ";
+			std::cin >> price;
+			std::cin.ignore();
+			inventory.add(str, price);
+		}
+	} while (keepreading);
+	display("\nPrice List\n----------\n", inventory, 13);
+
+	std::cout << "\nCorrections\n-----------\n";
+	keepreading = true;
+	do {
+		std::cout << "Product : ";
+		getline(std::cin, str);
+		if (str.compare("quit") == 0) {
+			keepreading = false;
+		}
+		else {
+			int i = inventory.find(str);
+			if (i != -1) {
+				std::cout << "Price : ";
+				std::cin >> price;
+				std::cin.ignore();
+				inventory.replace(i, str, price);
+			}
+		}
+	} while (keepreading);
+	display("\nPrice List\n----------\n", inventory, 13);
+
+	std::cout << "\nGlossary\n========\n";
+	KVList <std::string, std::string, 5> glossary;
+	std::string key, definition;
+
+	keepreading = true;
+	do {
+		std::cout << "Key : ";
+		getline(std::cin, key);
+		if (key.compare("quit") == 0) {
+			keepreading = false;
+		}
+		else {
+			std::cout << "Definition : ";
+			getline(std::cin, definition);
+			glossary.add(key, definition);
+		}
+	} while (keepreading);
+	display("\nEntries\n-------\n", glossary, 5);
+}thsaulon@matrix:~/Courses/OOP345/w3> cat KVList.h
+#ifndef W4_KVList_H
+#define W4_KVList_H
+#include <iostream>
+
+	template<typename K, typename V, int N>
+	class KVList
+	{
+		/*!Array of keys that relate values.*/
+		K m_key[N];
+		/*!Array of values that relate keys.*/
+		V m_value[N];
+		/*!Integer variable to hold number of current elements and used to iterate through parallel array indexes.*/
+		int numElements;
+
+	public:
+
+		/*!Default constructor adopts an empty state.*/
+		KVList() { numElements = 0; }
+		/*!Query function that returns number of current elements KVList object holds.*/
+		size_t size() const	{ return numElements; }
+		/*!Query function that returns a key from the key array at the i'th index*/
+		const K& key(int i) const { return m_key[i]; }
+		/*!Query function that returns a value from the value array at the i'th index*/
+		const V& value(int i) const { return m_value[i]; }
+
+		/*!A function that adds a number key-value pair if the array is not full.*/
+		KVList& add(const K& aKey, const V& aValue)
+		{
+			if (numElements < N)
+			{
+				this->m_key[numElements] = aKey;
+				this->m_value[numElements] = aValue;
+				numElements++;
+			}
+
+			return *this;
+		}
+
+		/*!A function that finds the index of an argument that matches a key in key array.*/
+		int find(const K& k) const
+		{
+			int atIndex;
+
+			for (size_t i = 0; i < numElements; i++)
+			{
+				if (this->m_key[i] == k)
+				{
+					atIndex = i;
+				}
+			}
+
+			return atIndex;
+		}
+
+		/*!A function that replaces a key-value pair at the i'th index.*/
+		KVList& replace(int i, const K& k, const V& v)
+		{
+			if (i > 0 && i < numElements)
+			{
+				this->m_key[i] = k;
+				this->m_value[i] = v;
+			}
+
+			return *this;
+		}
+	};
+
+#endif //W4_KVList_Hthsaulon@matrix:~/Courses/OOP345/w3> cat KVList.h[2Pw4.cpp[4Pwhoami2 gutenberg_shakespeare.txt ls[Kcd Courses/OOP345/w2ls[Kcat Text.cpp[7Plearls -l[Kclear[3Plscd w2[3Plscd Courses/OOP345ls[Kcat Text.cppls[Krm a.outls[Kcd Courses/OOP345/w2[10Pat w2.txtls[Kscript w2.txtls[Kdoxygen Doxyfile-g[Ka.out gutenberg_shakespeare.txt g++ -o a.out -std=c++0x Source.cpp Text.cpp [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cclear[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o a.out -std=c++0x Source.cpp Text.cpp [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cclear[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o a.out -std=c++0x Source.cpp Text.cpp [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[11Pa.out gutenberg_shakespeare.txt 
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K[3Plsclear[3Plsa.out gutenberg_shakespeare.txt g++ -o a.out -std=c++0x Source.cpp Text.cpp [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cclear[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o a.out -std=c++0x Source.cpp Text.cpp [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[KKV[K[Kw4.cpp
+thsaulon@matrix:~/Courses/OOP345/w3> a.out
+
+Inventory
+=========
+Product : Pizza
+Price : 4.49
+Product : Pierogi
+Price : 2.56
+Product : Potato Chips
+Price : 2.29
+Product : Black Tea
+Price : 4.49
+Product : Green Ta ea
+Price : 3.46
+Product : Fruit Tea
+Price : 2.29
+Product : quit
+
+Price List
+----------
+        Pizza : 4.49
+      Pierogi : 2.56
+ Potato Chips : 2.29
+    Black Tea : 4.49
+    Green Tea : 3.46
+
+Corrections
+-----------
+Product : Black Tea
+Price : 5.29
+Product : quit
+
+Price List
+----------
+        Pizza : 4.49
+      Pierogi : 2.56
+ Potato Chips : 2.29
+    Black Tea : 5.29
+    Green Tea : 3.46
+
+Glossary
+========
+Key : CPU
+Definition : central processing unit
+Key : arithmei tic logic unit                     ALU  
+Definition : arithmetic logic unit
+Key : quit
+
+Entries
+-------
+  CPU : central processing unit
+  ALU : arithmetic logic unit
+thsaulon@matrix:~/Courses/OOP345/w3> exit
+exit
+
+Script done on Sun 11 Feb 2018 04:38:53 PM EST

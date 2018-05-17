@@ -1,0 +1,344 @@
+Script started on Tue 17 Apr 2018 04:19:41 AM EDT
+thsaulon@matrix:~/Courses/OOP345/w7> whoami
+thsaulon
+thsaulon@matrix:~/Courses/OOP345/w7> cat DataTable.h 
+#ifndef DATATABLE_H
+#define DATATABLE_H
+#include <iomanip>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <fstream>
+#include <string>
+#include <numeric>
+#include <cmath>
+
+namespace w8
+{
+	/*!Templated class DataTable that holds a dataset of xy coordinates. */
+	template <typename T>
+	class DataTable
+	{
+
+		std::vector<T> x;
+		std::vector<T> y;
+
+		unsigned m_width, m_decimals;
+
+	public:
+
+		/*!DataTable constructor that recieves a reference to an fstream object, and two unsigned integers for width formatting and decimal places to output.*/
+		DataTable(std::ifstream& fs, unsigned width, unsigned decimals) : m_width{ width }, m_decimals{ decimals }
+		{
+			T tmp;
+			bool isX = true; //tracks whether the next value is x or y
+
+			while (fs >> tmp)
+			{
+				(isX) ? x.push_back(tmp) : y.push_back(tmp);
+				isX = !isX;	//switch boolean values per iteration
+			}
+		}
+
+		/*!Member function query that returns the mean or average of all y values.*/
+		T mean() const
+		{
+			return std::accumulate(y.begin(), y.end(), (T)0) / y.size();
+		}
+
+		/*!Member function query that returns the standard deviation of the dataset.*/
+		T sigma() const
+		{
+			std::vector<T> tmp = y;
+
+			for (size_t i = 0; i < tmp.size(); i++)
+			{
+				tmp[i] = std::pow(tmp[i] - mean(), 2);	//subtract mean and square element at index i.
+			}
+
+			return std::sqrt(std::accumulate(tmp.begin(), tmp.end(), (T)0) * (1.0 / (T)tmp.size()));
+		}
+
+		/*!Member function query that returns the median of the dataset.*/
+		T median() const
+		{
+			std::vector<T> tmp = y;
+			std::sort(tmp.begin(), tmp.end());
+
+			return tmp[tmp.size() / 2];
+		}
+
+		/*!Member query function that calculates and sets the value inside the received referenced slope and y_intercept of datatype T*/
+		void regression(T& slope, T& y_intercept) const
+		{
+			//declare for readability
+			//get mean of x and y
+			//average of yMean defined in mean()
+			T xMean = std::accumulate(x.begin(), x.end(), (T)0) / x.size();
+
+			//x and y of slope
+			T rise = 0;
+			T run = 0;
+
+			for (int i = 0; i < y.size(); i++)
+			{
+				rise += (x.at(i) - xMean) * (y.at(i) - mean());
+				run += std::pow((x.at(i) - xMean), 2);
+			}
+
+			slope = rise / run;
+			y_intercept = mean() - (slope * xMean);
+		}
+
+		/*!Member query function that displays the the DataTable object details to the referenced ostream object received.*/
+		void display(std::ostream& os) const
+		{
+			os << std::setw(m_width) << "x" << std::setw(m_width) << "y" << std::endl;
+
+			for (int i = 0; i < y.size(); i++)
+			{
+				os << std::setw(m_width) << std::fixed << std::setprecision(m_decimals) << x.at(i) << std::setw(m_width) << y.at(i) << std::endl;
+			}
+		}
+	};
+
+	/*!Helper function that outputs the details of the DataTable object used with the (<<) overloaded operator to the ostream object reference received.*/
+	template <typename T>
+	std::ostream& operator<<(std::ostream& os, const DataTable<T>& obj)
+	{
+		obj.display(os);
+		return os;
+	}
+}
+
+#endif //DATATABLE_H
+
+thsaulon@matrix:~/Courses/OOP345/w7> cat w7.h[Kcpp
+// Workshop 8 - STL Algorithms
+// w8.cpp
+
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <string>
+#include "DataTable.h"
+
+const int FW = 7;
+const int ND = 2;
+
+int main(int argc, char** argv) {
+	std::cout << "\nCommand Line : ";
+	for (int i = 0; i < argc; i++) {
+		std::cout << argv[i] << ' ';
+	}
+	std::cout << std::endl;
+	if (argc != 2 && argc != 3) {
+		std::cerr << argv[0] << ": incorrect number of arguments\n";
+		std::cerr << "Usage: " << argv[0] << " file_name [p]\n";
+		return 1;
+	}
+	std::ifstream dataFile(argv[1]);
+	if (!dataFile) {
+		std::cerr << "\n***Failed to open file " << argv[1] << "***\n";
+		return 2;
+	}
+
+	try {
+		w8::DataTable<float> data(dataFile, FW, ND);
+		if (argc == 3) {
+			std::cout << "\nData Values\n===========\n";
+			std::cout << data << std::endl;
+		}
+		float m, c;
+		data.regression(m, c);
+		std::cout << "\nStatistics\n==========\n";
+		std::cout << std::fixed << std::setprecision(ND);
+		std::cout << "y mean    = " << std::setw(FW) << data.mean() <<
+			"\ny sigma   = " << std::setw(FW) << data.sigma() <<
+			"\ny median  = " << std::setw(FW) << data.median() << std::endl;
+		std::cout << "slope     = " << std::setw(FW) << m <<
+			"\nintercept = " << std::setw(FW) << c << std::endl;
+	}
+	catch (std::string& msg) {
+		std::cout << msg << std::endl;
+		return 3;
+	}
+
+	std::cout << "\nPress any key to continue ... ";
+	std::cin.get();
+}thsaulon@matrix:~/Courses/OOP345/w7> cat w7.cppDataTable.h [10Pwhoamidoxygen Doxyfilels[Kdoxygen -gDoxyfilels[Kscript ms3.txtms3 TaskList_Whitespace.dat CustomerOrders_WWhitespace.dat ItemList_Whitespace.dat "|"[Als[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cclearl[Ksclear[3Pls[Kmv w6 ms3ls[Kclearg++ -o w6 -std=c++0x CustomerItem.cpp CustommerOrder.cpp Item.cpp ItemManager.cpp OrderManager.cpp Task.cpp TaskManager.cpp UUtilities.cpp Milestone_3.cpp [C[C[C[C[C[C[C[C[C[C[C[C[C[K[A[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls[K
+[K
+[K[A[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o w6 -std=c++0x CustomerItem.cpp CustommerOrder.cpp Item.cpp ItemManager.cpp OrderManager.cpp Task.cpp TaskManager.cpp UUtilities.cpp Milestone_3.cpp [C[C[C[C[C[C[C[C[C[C[C[C[C[K[K[K[K[K[K[K[K[K[K[K[K[K[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1P[1@7[C[C[C[C[C[C[C[C[C[C[C[Cw7.cpp
+thsaulon@matrix:~/Courses/OOP345/w7> w7 Simple.dat p
+
+Command Line : w7 Simple.dat p 
+
+Data Values
+===========
+      x      y
+   2.10   8.00
+   2.50  12.00
+   4.00  14.00
+   3.60  10.00
+
+
+Statistics
+==========
+y mean    =   11.00
+y sigma   =    2.24
+y median  =   12.00
+slope     =    1.91
+intercept =    5.18
+
+Press any key to continue ... w7 F    
+thsaulon@matrix:~/Courses/OOP345/w7> Si[K[Kw7 Simple.dat [K[K[K[K[K[K[K[K[K[K[KFlat.dat p
+
+Command Line : w7 Flat.dat p 
+
+Data Values
+===========
+      x      y
+   1.00   1.00
+   2.00   1.00
+   3.00   1.00
+   4.00   1.00
+
+
+Statistics
+==========
+y mean    =    1.00
+y sigma   =    0.00
+y median  =    1.00
+slope     =    0.00
+intercept =    1.00
+
+Press any key to continue ... 
+thsaulon@matrix:~/Courses/OOP345/w7> w7 F[KHS_College_GPA.dat p
+
+Command Line : w7 HS_College_GPA.dat p 
+
+Data Values
+===========
+      x      y
+   3.45   3.76
+   2.78   2.87
+   2.52   2.54
+   3.67   3.83
+   3.24   3.29
+   2.10   2.64
+   2.82   2.86
+   2.36   2.03
+   2.42   2.81
+   3.51   3.41
+   3.48   3.61
+   2.14   2.48
+   2.59   3.21
+   3.46   3.52
+   3.51   3.41
+   3.68   3.52
+   3.91   3.84
+   3.72   3.64
+   2.15   2.14
+   2.48   2.21
+   3.09   3.17
+   2.71   3.01
+   2.46   3.17
+   3.32   3.01
+   3.61   3.72
+   3.82   3.78
+   2.64   2.51
+   2.19   2.10
+   3.34   3.21
+   3.48   3.68
+   3.56   3.48
+   3.81   3.71
+   3.92   3.81
+   2.52   2.09
+   2.71   2.17
+   3.15   2.98
+   3.22   3.28
+   2.29   2.74
+   2.03   2.19
+   3.14   3.28
+   3.52   3.68
+   2.91   3.17
+   2.83   3.17
+   2.65   3.31
+   2.41   3.07
+   2.54   2.38
+   2.66   2.94
+   3.21   2.84
+   3.34   3.17
+   3.68   3.72
+   2.84   2.17
+   2.74   2.42
+   2.71   2.49
+   2.24   3.38
+   2.48   2.07
+   3.14   3.22
+   2.83   2.71
+   3.44   3.31
+   2.89   3.28
+   2.67   3.19
+   3.24   3.24
+   3.29   3.53
+   3.87   3.72
+   3.94   3.98
+   3.42   3.09
+   3.52   3.42
+   2.24   2.07
+   3.29   3.17
+   3.41   3.51
+   3.56   3.49
+   3.61   3.51
+   3.28   3.40
+   3.21   3.38
+   3.48   3.54
+   3.62   3.48
+   2.92   3.09
+   2.81   3.14
+   3.11   3.28
+   3.28   3.41
+   2.70   3.02
+   2.62   2.97
+   3.72   4.00
+   3.42   3.34
+   3.51   3.28
+   3.28   3.32
+   3.42   3.51
+   3.90   3.68
+   3.12   3.07
+   2.83   2.78
+   2.09   3.68
+   3.17   3.30
+   3.28   3.34
+   3.02   3.17
+   3.42   3.07
+   3.06   3.19
+   2.76   2.15
+   3.19   3.11
+   2.23   2.17
+   2.48   2.14
+   3.76   3.74
+   3.49   3.27
+   3.07   3.19
+   2.19   2.98
+   3.46   3.28
+
+
+Statistics
+==========
+y mean    =    3.12
+y sigma   =    0.50
+y median  =    3.21
+slope     =    0.78
+intercept =    0.73
+
+Press any key to continue ... 
+thsaulon@matrix:~/Courses/OOP345/w7> exit
+exit
+
+Script done on Tue 17 Apr 2018 04:21:18 AM EDT

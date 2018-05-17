@@ -1,0 +1,79 @@
+\hypertarget{classKVList}{}\section{K\+V\+List$<$ K, V, N $>$ Class Template Reference}
+\label{classKVList}\index{K\+V\+List$<$ K, V, N $>$@{K\+V\+List$<$ K, V, N $>$}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classKVList_a252cba3f0d183beebdf8a545c748b8a3}{K\+V\+List}} ()
+\item 
+size\+\_\+t \mbox{\hyperlink{classKVList_a78553e3fffba19b64ae5d7404895070f}{size}} () const
+\item 
+const K \& \mbox{\hyperlink{classKVList_ad1abbfbdef9b9f7f79ed30cd259bc2c9}{key}} (int i) const
+\item 
+const V \& \mbox{\hyperlink{classKVList_a9e88a57305e260e0e372a025d2d7b024}{value}} (int i) const
+\item 
+\mbox{\hyperlink{classKVList}{K\+V\+List}} \& \mbox{\hyperlink{classKVList_ab0604395c2c4063eb1bab61983f018a9}{add}} (const K \&a\+Key, const V \&a\+Value)
+\item 
+int \mbox{\hyperlink{classKVList_aef6e6bcc30e6436b2ad957f3efcfb822}{find}} (const K \&k) const
+\item 
+\mbox{\hyperlink{classKVList}{K\+V\+List}} \& \mbox{\hyperlink{classKVList_a8f09811cd71f9ff582ae0cde60d2cbea}{replace}} (int i, const K \&k, const V \&v)
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classKVList_a252cba3f0d183beebdf8a545c748b8a3}\label{classKVList_a252cba3f0d183beebdf8a545c748b8a3}} 
+\index{K\+V\+List@{K\+V\+List}!K\+V\+List@{K\+V\+List}}
+\index{K\+V\+List@{K\+V\+List}!K\+V\+List@{K\+V\+List}}
+\subsubsection{\texorpdfstring{K\+V\+List()}{KVList()}}
+{\footnotesize\ttfamily template$<$typename K , typename V , int N$>$ \\
+\mbox{\hyperlink{classKVList}{K\+V\+List}}$<$ K, V, N $>$\+::\mbox{\hyperlink{classKVList}{K\+V\+List}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Default constructor adopts an empty state. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classKVList_ab0604395c2c4063eb1bab61983f018a9}\label{classKVList_ab0604395c2c4063eb1bab61983f018a9}} 
+\index{K\+V\+List@{K\+V\+List}!add@{add}}
+\index{add@{add}!K\+V\+List@{K\+V\+List}}
+\subsubsection{\texorpdfstring{add()}{add()}}
+{\footnotesize\ttfamily template$<$typename K , typename V , int N$>$ \\
+\mbox{\hyperlink{classKVList}{K\+V\+List}}\& \mbox{\hyperlink{classKVList}{K\+V\+List}}$<$ K, V, N $>$\+::add (\begin{DoxyParamCaption}\item[{const K \&}]{a\+Key,  }\item[{const V \&}]{a\+Value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+A function that adds a number key-\/value pair if the array is not full. \mbox{\Hypertarget{classKVList_aef6e6bcc30e6436b2ad957f3efcfb822}\label{classKVList_aef6e6bcc30e6436b2ad957f3efcfb822}} 
+\index{K\+V\+List@{K\+V\+List}!find@{find}}
+\index{find@{find}!K\+V\+List@{K\+V\+List}}
+\subsubsection{\texorpdfstring{find()}{find()}}
+{\footnotesize\ttfamily template$<$typename K , typename V , int N$>$ \\
+int \mbox{\hyperlink{classKVList}{K\+V\+List}}$<$ K, V, N $>$\+::find (\begin{DoxyParamCaption}\item[{const K \&}]{k }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+A function that finds the index of an argument that matches a key in key array. \mbox{\Hypertarget{classKVList_ad1abbfbdef9b9f7f79ed30cd259bc2c9}\label{classKVList_ad1abbfbdef9b9f7f79ed30cd259bc2c9}} 
+\index{K\+V\+List@{K\+V\+List}!key@{key}}
+\index{key@{key}!K\+V\+List@{K\+V\+List}}
+\subsubsection{\texorpdfstring{key()}{key()}}
+{\footnotesize\ttfamily template$<$typename K , typename V , int N$>$ \\
+const K\& \mbox{\hyperlink{classKVList}{K\+V\+List}}$<$ K, V, N $>$\+::key (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Query function that returns a key from the key array at the i\textquotesingle{}th index \mbox{\Hypertarget{classKVList_a8f09811cd71f9ff582ae0cde60d2cbea}\label{classKVList_a8f09811cd71f9ff582ae0cde60d2cbea}} 
+\index{K\+V\+List@{K\+V\+List}!replace@{replace}}
+\index{replace@{replace}!K\+V\+List@{K\+V\+List}}
+\subsubsection{\texorpdfstring{replace()}{replace()}}
+{\footnotesize\ttfamily template$<$typename K , typename V , int N$>$ \\
+\mbox{\hyperlink{classKVList}{K\+V\+List}}\& \mbox{\hyperlink{classKVList}{K\+V\+List}}$<$ K, V, N $>$\+::replace (\begin{DoxyParamCaption}\item[{int}]{i,  }\item[{const K \&}]{k,  }\item[{const V \&}]{v }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+A function that replaces a key-\/value pair at the i\textquotesingle{}th index. \mbox{\Hypertarget{classKVList_a78553e3fffba19b64ae5d7404895070f}\label{classKVList_a78553e3fffba19b64ae5d7404895070f}} 
+\index{K\+V\+List@{K\+V\+List}!size@{size}}
+\index{size@{size}!K\+V\+List@{K\+V\+List}}
+\subsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily template$<$typename K , typename V , int N$>$ \\
+size\+\_\+t \mbox{\hyperlink{classKVList}{K\+V\+List}}$<$ K, V, N $>$\+::size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Query function that returns number of current elements \mbox{\hyperlink{classKVList}{K\+V\+List}} object holds. \mbox{\Hypertarget{classKVList_a9e88a57305e260e0e372a025d2d7b024}\label{classKVList_a9e88a57305e260e0e372a025d2d7b024}} 
+\index{K\+V\+List@{K\+V\+List}!value@{value}}
+\index{value@{value}!K\+V\+List@{K\+V\+List}}
+\subsubsection{\texorpdfstring{value()}{value()}}
+{\footnotesize\ttfamily template$<$typename K , typename V , int N$>$ \\
+const V\& \mbox{\hyperlink{classKVList}{K\+V\+List}}$<$ K, V, N $>$\+::value (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Query function that returns a value from the value array at the i\textquotesingle{}th index 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+K\+V\+List.\+h\end{DoxyCompactItemize}

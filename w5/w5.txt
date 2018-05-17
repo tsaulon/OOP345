@@ -1,0 +1,198 @@
+Script started on Wed 14 Mar 2018 12:47:44 AM EDT
+thsaulon@matrix:~/Courses/OOP345/w5> whoami
+thsaulon
+thsaulon@matrix:~/Courses/OOP345/w5> cat Grades.cpp
+#include "Grades.h"
+
+Grades::Grades() : stdID{ nullptr }, grade{ nullptr }, numRec { 0 } {}
+
+Grades::Grades(const char* file) : stdID{ nullptr }, grade{ nullptr }, numRec{ 0 }
+{
+	try {
+		readRecords(file);
+	}
+	catch (const char* msg) {
+		std::cout << msg << std::endl;
+	}
+
+	if (numRec > 0)
+	{
+		stdID = new std::string[numRec];
+		grade = new float[numRec];
+		readRecords(file, true);
+	}
+}
+
+Grades::~Grades()
+{
+	delete[] grade;
+	delete[] stdID;
+}
+
+void Grades::readRecords(const char* aFile, bool save) {
+
+	std::ifstream file;
+	std::string tmp;
+
+	file.open(aFile);
+
+	if (file.is_open())
+	{
+		if (!save) {
+			while (std::getline(file, tmp, '\n')) {
+				numRec++;
+			}
+		}
+		else {
+			for (int i = 0; i < numRec; i++) {
+				std::getline(file, tmp, ' ');
+				stdID[i] = tmp;
+				file >> grade[i];
+				file.get();
+			}
+
+			file.ignore(2000, '\n');
+		}
+	}
+	else
+	{
+		throw "File could not be opened!";
+	}
+}thsaulon@matrix:~/Courses/OOP345/w5> cat Grades.h
+#ifndef W6_GRADES_H
+#define W6_GRADES_H
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <iomanip>
+
+class Grades
+{
+	/*!Class pointer that stores a dynamic array of std::string(s) of student IDs.*/
+	std::string* stdID;
+	/*!Class pointer that stores a dynamic array of float datatypes of grade percentages.*/
+	float* grade;
+	/*!Class variable that stores the amount of records stored in the object.*/
+	size_t numRec;
+
+public:
+	/*!Class default constructor that defines an empty state.*/
+	Grades();
+	/*Class constructor that recieves a parametered character array of file name and pulls information from that file.*/
+	Grades(const char* file);
+	/*Prevention of instantiating a grades object using a lvalued Grades object.*/
+	Grades(const Grades&) = delete;
+	/*Prevention of instantiating a grades object using a rvalued Grades object.*/
+	Grades(const Grades&&) = delete;
+	/*Prevention of assignment to a grades object using a lvalued Grades object.*/
+	Grades& operator=(const Grades&) = delete;
+	/*Prevention of assignment to a grades object using a rvalued Grades object.*/
+	Grades& operator=(const Grades&&) = delete;
+	/*!Class destructor that cleans up dynamically allocated memory for stdID and grade arrays*/
+	~Grades();
+
+	/*!Class member function that reads a file and saves the contents depending on the boolean argument passed as a parameter.*/
+	void readRecords(const char* aFile, bool save = false);
+
+	/*!Class member template function that recieves a function and an ostream object reference and prints out the file details with the corresponding grade letter.*/
+	template<typename Func>
+	void displayGrades(std::ostream& os, Func func) const {
+
+		for (int i = 0; i < numRec; i++) {
+			os << std::fixed;
+			os << std::setprecision(2);
+			os << stdID[i] << ' ' << grade[i] << ' ' << func(grade[i]) << std::endl;
+		}
+	}
+};
+
+#endif // W6_GRADES_Hthsaulon@matrix:~/Courses/OOP345/w5> cat w5.cpp
+// Workshop 6 - Lambda Expression
+// w6.cpp
+
+#include <iostream>
+#include "Grades.h"
+
+int main(int argc, char* argv[]) {
+	if (argc != 2) {
+		std::cerr << argv[0] <<
+			": incorrect number of arguments\n";
+		std::cerr << "Usage: " << argv[0] << " file_name\n";
+		return 1;
+	}
+
+	Grades grades(argv[1]);
+
+	// define the lambda expression for letter
+	auto letter = [](float num)
+	{
+		std::string gradeLetter;
+
+		if (num < 50) {
+			gradeLetter = 'F';
+		}
+		else if (num >= 50 && num < 54) {
+			gradeLetter = 'D';
+		}
+		else if (num >= 55 && num < 60) {
+			gradeLetter = "D+";
+		}
+		else if (num >= 60 && num < 65) {
+			gradeLetter = 'C';
+		}
+		else if (num >= 65 && num < 70) {
+			gradeLetter = "C+";
+		}
+		else if (num >= 70 && num < 75) {
+			gradeLetter = 'B';
+		}
+		else if (num >= 75 && num < 80) {
+			gradeLetter = "B+";
+		}
+		else if (num >= 80 && num < 89) {
+			gradeLetter = 'A';
+		}
+		else if (num > 89) {
+			gradeLetter = "A+";
+		}
+
+		return gradeLetter;
+	};
+
+	grades.displayGrades(std::cout, letter);
+
+	std::cout << "Press any key to continue ... ";
+	std::cin.get();
+}thsaulon@matrix:~/Courses/OOP345/w5> cat gradeinfo.txt
+1022342 67.4
+1024567 73.5
+2031456 79.3
+6032144 53.5
+1053250 92.1
+3026721 86.5
+7420134 62.3
+9762314 58.7
+6521045 34.6thsaulon@matrix:~/Courses/OOP345/w5> cat gradeinfo.txt[7Pw5.cppGrades.hcpp[8Pwhoami[4Plsmv w5.cpp w6.cppls[Kclear[3Plscd w5[3Plsclear[3Plscd Courses/OOP345/lear[K[3Plsdoxygen Doxyfile ls[Kdoxygen -gls[KdoxygenDoxygenls[Ka.out gradeinfo.txt [K[3Plsg++ -o a.out -std=c++0x w5.cpp Grades.cpp[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls[Kg++ -o a.out -std=c++0x w5.cpp Grades.cpp[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls[Ka.out gradeinfo.txt [K[3Plsg++ -o a.out -std=c++0x w5.cpp Grades.cpp
+thsaulon@matrix:~/Courses/OOP345/w5> a.out gradeinfo.txt
+1022342 67.40 C+
+
+1024567 73.50 B
+
+2031456 79.30 B+
+
+6032144 53.50 D
+
+1053250 92.10 A+
+
+3026721 86.50 A
+
+7420134 62.30 C
+
+9762314 58.70 D+
+
+6521045 34.60 F
+Press any key to continue ... 
+thsaulon@matrix:~/Courses/OOP345/w5> exit
+exit
+
+Script done on Wed 14 Mar 2018 12:49:08 AM EDT

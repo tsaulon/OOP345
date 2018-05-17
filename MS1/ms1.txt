@@ -1,0 +1,440 @@
+Script started on Tue 20 Mar 2018 09:32:37 PM EDT
+thsaulon@matrix:~/Courses/OOP345/MS1> whoami
+thsaulon
+thsaulon@matrix:~/Courses/OOP345/MS1> cat Utilities..cpp[K[K[K[Kcpp [K[K[K[K[K[K[K[K[K[K[K[K[K[KTask.h [K
+// Task Milestone - Task Interface
+// Task.h
+// Chris Szalwinski
+// v1.0 - 24/10/2015
+// v2.0 - 23/02/2016
+#ifndef TASK_H
+#define TASK_H
+#include <string>
+#include "Utilities.h"
+
+class Task {
+	std::string name;          // name of the task
+	std::string slots;         // number of slots
+	std::string nextTask[2];   // names of the next tasks
+	const Task* pNextTask[2];  // addresses of the next tasks
+	static size_t field_width; // current maximum field width 
+public:
+	enum Quality {
+		passed,
+		redirect
+	};
+
+	//Object constructor that uses a parametered constant reference to a string object to create a Task object.
+	Task(const std::string&);
+	//Member function that recieves a constant reference to a Task object and compares the parametered object to the current object's nextTask.
+	bool validate(const Task&);
+	//Member function that returns the name of the current Task.
+	const std::string& getName() const { return name; }
+	//Member function that returns the number of slots within the current Task
+	unsigned int getSlots() const { return std::stoi(slots); }
+	//Member function that returns a pointer to the nextTask at the index of a parametered enum of this object.
+	const Task* getNextTask(Quality) const;
+	//Member function that displays details of the current object.
+	void display(std::ostream&) const;
+	//Member function that returns the field_width of the current object.
+	static size_t getFieldWidth() { return field_width; }
+};
+
+//Helper function that compares two tasks.
+bool operator==(const Task&, const Task&);
+
+#endifthsaulon@matrix:~/Courses/OOP345/MS1> cat Task.cpp
+#include <iostream>
+#include <iomanip>
+#include "Task.h"
+
+size_t Task::field_width = 1;
+
+Task::Task(const std::string& str)
+{
+	//initialize empty states
+	this->slots = "1";
+	this->pNextTask[passed] = nullptr;
+	this->pNextTask[redirect] = nullptr;
+
+	//Declare variables for str parsing
+	bool more = true;
+	size_t next_pos = 0;
+	Utilities x;
+
+	//parse strings
+	this->name = x.nextToken(str, next_pos, more);
+	this->slots = x.nextToken(str, next_pos, more);
+	this->nextTask[passed] = x.nextToken(str, next_pos, more);
+	this->nextTask[redirect] = x.nextToken(str, next_pos, more);
+
+	//set field width if greater than current.
+	if (x.getFieldWidth() > this->getFieldWidth()) {
+		this->field_width = x.getFieldWidth();
+	}
+
+	if (slots.empty()) {
+		this->slots = "1";
+	}
+}
+
+
+bool Task::validate(const Task& task)
+{
+	if (nextTask[passed] == task.name) {
+		this->pNextTask[passed] = &task;
+	}
+	
+	if (nextTask[redirect] == task.name) {
+		this->pNextTask[redirect] = &task;
+	}
+
+	return (nextTask[passed].empty() || pNextTask[passed]) && (nextTask[redirect].empty() || pNextTask[redirect]);
+}
+
+const Task* Task::getNextTask(Quality quality) const
+{
+	if (!this->pNextTask[quality]) {
+		throw "*** Validate [" + this->nextTask[quality] + "] @ [" + this->name + "] ***";
+	}
+
+	return this->pNextTask[quality];
+}
+
+void Task::display(std::ostream& os) const
+{
+	os << "Task Name    : " << std::left << std::setw(this->getFieldWidth() + 5) << "[" + name + "]";
+	os << "[" + this->slots + "]" << std::endl;
+
+	if (!this->nextTask[passed].empty()) {
+		os << " Continue to : " << std::left << std::setw(this->getFieldWidth() + 5) << "[" + this->nextTask[passed] + "]";
+		if (this->pNextTask[passed] == nullptr) {
+			os << " *** to be validated ***";
+		}
+		os << std::endl;
+	}
+
+	if (!this->nextTask[redirect].empty()) {
+		os << " Redirect to : " << std::left << std::setw(this->getFieldWidth() + 5) << "[" + this->nextTask[redirect] + "]";
+		if (this->pNextTask[redirect] == nullptr) {
+			os << " *** to be validated ***";
+		}
+		os << std::endl;
+	}
+
+}
+
+//helper function
+bool operator==(const Task& a, const Task& b)
+{
+	//check if tasks have same name
+	return a.getName() == b.getName();
+}thsaulon@matrix:~/Courses/OOP345/MS1> cat Utilities..[Kcpp[K[K[Kh
+#ifndef UTILITIES_H
+#define UTILITIES_H
+
+// Milestone 1 - Utilities Interface
+// Utilities.h
+// Chris Szalwinski
+// v1.0 - 24/10/2015
+// v2.0 - 23/02/2016
+#include <string>
+#include <fstream>
+
+class Utilities {
+	size_t field_width;           // maximum field width needed 
+	static char delimiter;        // field delimiter character
+	static std::ofstream logFile; // log file
+public:
+	//Default constructor sets object to empty state with field width of 1.
+	Utilities();
+	//Member function that returns the field_width of this object.
+	size_t getFieldWidth() const { return field_width; }
+	//Member function that retrives a reference to a string to parse, a reference to a size_t datatype to reference a position of where in the string to begin parsing,
+	//a reference to a bool datatype to flag whether or not parsing can be continued.
+	//This member function returns the parsed token referenced by a parametered string reference.
+	const std::string nextToken(const std::string&, size_t&, bool&);
+	//Static member function that sets the delimiter when string parsing.
+	static void setDelimiter(const char c) { delimiter = c; }
+	//Static member function that closes an open std::ofstream object and creates a new std::ofstream object from the character array paramatered to this function.
+	static void setLogFile(const char* name) { 
+		if (logFile.is_open()) { logFile.close(); }
+		logFile.open(name); 
+	}
+	//Static member function that retrieves a reference to a std::ofstream object.
+	static std::ofstream& getLogFile() { return logFile; }
+};
+
+#endif thsaulon@matrix:~/Courses/OOP345/MS1> cat Utilities..[Kh[Kcpp
+#include <iostream>
+#include <cctype>
+#include "Utilities.h"
+
+char Utilities::delimiter = '|';
+std::ofstream Utilities::logFile;
+
+Utilities::Utilities() : field_width{ 1 } {}
+
+const std::string Utilities::nextToken(const std::string& str, size_t& next_pos, bool& more)
+{
+	/******************************************
+	*			CLEAN FILE SOLUTION			  *
+	*******************************************/
+
+	std::string token = "";
+
+	//continue if more to be extracted
+	if (more)
+	{
+		//store string starting from next_pos 
+		token = str.substr(next_pos);
+		//store delimiter index
+		size_t dl_pos = token.find(delimiter);
+		//if delimiter was found
+		if (dl_pos != std::string::npos) {
+			//isolate token
+			//erase rest of contents starting from end_pos
+			token.erase(dl_pos, token.length());
+		}
+
+		//set next position to read from delimiter
+		next_pos += token.length() + 1;
+		if (next_pos > str.length()) {
+			//flag no more extracting
+			more = false;
+		}
+
+
+		/******************************************
+		*	CLEAN FILE WITH WHITESPACE SOLUTION	  *
+		*******************************************/
+
+		std::string reverse = "";
+
+		//remove trailing and leading white space.
+		for (int j = 0; j < 2; j++) {
+
+			//reverse string
+			for (int i = token.length() - 1; i >= 0; i--) {
+				reverse += token[i];
+			}
+
+			//remove leading whitespace
+			if (std::isspace(reverse[0])) {
+				reverse.erase(0, reverse.find_first_not_of(' '));
+			}
+
+			//reset
+			token.assign(reverse);
+			reverse.clear();
+		}
+	}
+
+	//set field width
+	if (this->field_width < token.length()) {
+		this->field_width = token.length();
+	}
+
+	return token;
+}thsaulon@matrix:~/Courses/OOP345/MS1> cat Milestone_1.cpp 
+// Milestone 1 - Task Manager - Main Program
+// milestone_1.cpp
+// Chris Szalwinski
+// v1.0 - 24/10/2015
+// v2.0 - 15/01/2016
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <memory>
+#include <vector>
+#include "Task.h"
+#include "Utilities.h"
+
+void loadFromFile(const char*, std::vector<Task>&, std::ostream&);
+
+int main(int argc, char** argv) {
+	// process command line arguments
+	if (argc != 3) {
+		std::cerr << "*** invalid number of arguments ***\n"
+			<< "Usage: " << argv[0] << " tasks_file delimiter\n";
+		exit(1);
+	}
+	std::cout << "Command Line Arguments\n----------------------\n";
+	std::cout << "Tasks File Specified          = " << argv[1] << "\n";
+	std::cout << "File Record Field Delimiter   = " << argv[2][0] << "\n\n";
+	Utilities::setDelimiter(argv[2][0]);
+	// end of command line processing
+
+	// Load, Accept and Display the Tasks
+	//
+	std::cout << "\n*** Load and Accept the Tasks ***\n";
+	std::vector<Task> tasks;
+	loadFromFile(argv[1], tasks, std::cerr);
+	std::cout << "\nList of Accepted Tasks\n----------------------\n";
+	for (auto& t : tasks)
+		t.display(std::cout);
+
+	// Check nextTask
+	//
+	std::cout << "\nCheck Follow-On Tasks\n---------------------\n";
+	int nerr = 0;
+	for (auto& t : tasks) {
+		try {
+			std::cout << t.getNextTask(Task::passed)->getName() << std::endl;
+			std::cout << t.getNextTask(Task::redirect)->getName() << std::endl;
+		}
+		catch (const std::string& msg) {
+			std::cerr << msg << std::endl;
+			nerr++;
+			if (nerr > 3) {
+				std::cerr << "*** Further checks suspended ***" << std::endl;
+				break;
+			}
+		}
+	}
+
+	// Validate the Tasks
+	//
+	std::cout << "\nValidating the Accepted Tasks\n-----------------------------\n";
+	bool valid = true;
+	for (auto i = 0u; i < tasks.size() && valid; i++) {
+		bool invalid = true;
+		for (auto j = 0u; j < tasks.size() && invalid; j++) {
+			if (tasks[i].validate(tasks[j]))
+				invalid = false;
+		}
+		valid = !invalid;
+	}
+	if (!valid)
+		std::cerr << "*** Not all Tasks have been validated ***\n";
+	for (auto& t : tasks)
+		t.display(std::cout);
+
+	// Terminate
+	//
+	std::cout << "\nDone!\nPress Enter Key to Exit ... ";
+	char c;
+	std::cin.get(c);
+}
+
+void loadFromFile(const char* fileName, std::vector<Task>& taskSet, std::ostream& os) {
+	std::ifstream file(fileName);
+	if (!file) {
+		os << "*** Cannot open file named " << fileName << " ***\n";
+		exit(1);
+	}
+	while (file) {
+		std::string record;
+		std::getline(file, record);
+		if (file) {
+			try {
+				std::unique_ptr<Task> entry(new Task(record));
+				if (!entry->getName().empty())
+					taskSet.push_back(std::move(*entry));
+			}
+			catch (const std::string& msg) {
+				os << msg << std::endl;
+			}
+		}
+	}
+}thsaulon@matrix:~/Courses/OOP345/MS1> cat WhiteL[KT[KL[K[K[K[K[K[KTaskList_Whitespace.dat 
+Power Supply | 4 | Motherboard
+Motherboard     |           3 | CPU |          Remove CPU
+       Remove CPU         |            1 |CPU           
+CPU | 5 | Memory | Remove CPU
+Remove CPU | 1 | CPU
+Memory | 4 | SSD | Remove Memory
+Remove Memory | 1 | Memory
+SSD    |      4         | GPU |          Remove SSD
+Remove SSD     | 1   |SSD
+GPU|3|Test
+Test | 4 | Approve | Repair
+Repair
+ Approvethsaulon@matrix:~/Courses/OOP345/MS1> cat TaskList_Whitespace.dat [8PMilestone_1.cpp[C[3PUtilities.cpp[2Ph[3PTask.cpp[2Ph[4Pwhoami[2Pexit[2Plscd w5[3Plscd OOP345ls[Kcd Courses/ls[Kclear[1Pr[2Plscat w6.txtls[Kscript w6.txtls[Kcd w5[3Plsclear[3Plscd OOP345/[Kls[Kcd ..ls w4cd ..mv w6.cpp w5.cppls[Kcd w5[3Plscd Courses/OOP345/exit[Ka.out gradeinfo.txtg++ -o a.out -std=c++0x w5.cpp Grades.cpp[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[24Pcat gradeinfo.txtg++ -o a.out -std=c++0x w5.cpp Grades.cpp[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[22Pa.out gradeinfo.txtexit[Kcd Courses/OOP345/ls[Kcd w5[3Plsmv w6.cpp w5.cppcd ..[Kls w4cd ..[3Plscd ..ls w4cd ..mv w6.cpp w5.cppls[Kcd w5[3Plscd Courses/OOP345/exit[Ka.out gradeinfo.txtg++ -o a.out -std=c++0x w5.cpp Grades.cpp[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[C[1P[1P[1P[1P[1P[1@m[1@s[1@1[C[C[C[C[C[C[C[C[C[C[C[CTask.cpp Utilities.c pp Milestone_1.cpp 
+thsaulon@matrix:~/Courses/OOP345/MS1> ms1 TaskList_Whitespace.dat "|"
+Command Line Arguments
+----------------------
+Tasks File Specified          = TaskList_Whitespace.dat
+File Record Field Delimiter   = |
+
+
+*** Load and Accept the Tasks ***
+
+List of Accepted Tasks
+----------------------
+Task Name    : [Power Supply]    [4]
+ Continue to : [Motherboard]      *** to be validated ***
+Task Name    : [Motherboard]     [3]
+ Continue to : [CPU]              *** to be validated ***
+ Redirect to : [Remove CPU]       *** to be validated ***
+Task Name    : [Remove CPU]      [1]
+ Continue to : [CPU]              *** to be validated ***
+Task Name    : [CPU]             [5]
+ Continue to : [Memory]           *** to be validated ***
+ Redirect to : [Remove CPU]       *** to be validated ***
+Task Name    : [Remove CPU]      [1]
+ Continue to : [CPU]              *** to be validated ***
+Task Name    : [Memory]          [4]
+ Continue to : [SSD]              *** to be validated ***
+ Redirect to : [Remove Memory]    *** to be validated ***
+Task Name    : [Remove Memory]   [1]
+ Continue to : [Memory]           *** to be validated ***
+Task Name    : [SSD]             [4]
+ Continue to : [GPU]              *** to be validated ***
+ Redirect to : [Remove SSD]       *** to be validated ***
+Task Name    : [Remove SSD]      [1]
+ Continue to : [SSD]              *** to be validated ***
+Task Name    : [GPU]             [3]
+ Continue to : [Test]             *** to be validated ***
+Task Name    : [Test]            [4]
+ Continue to : [Approve]          *** to be validated ***
+ Redirect to : [Repair]           *** to be validated ***
+Task Name    : [Repair]          [1]
+Task Name    : [Approve]         [1]
+
+Check Follow-On Tasks
+---------------------
+*** Validate [Motherboard] @ [Power Supply] ***
+*** Validate [CPU] @ [Motherboard] ***
+*** Validate [CPU] @ [Remove CPU] ***
+*** Validate [Memory] @ [CPU] ***
+*** Further checks suspended ***
+
+Validating the Accepted Tasks
+-----------------------------
+Task Name    : [Power Supply]    [4]
+ Continue to : [Motherboard]     
+Task Name    : [Motherboard]     [3]
+ Continue to : [CPU]             
+ Redirect to : [Remove CPU]      
+Task Name    : [Remove CPU]      [1]
+ Continue to : [CPU]             
+Task Name    : [CPU]             [5]
+ Continue to : [Memory]          
+ Redirect to : [Remove CPU]      
+Task Name    : [Remove CPU]      [1]
+ Continue to : [CPU]             
+Task Name    : [Memory]          [4]
+ Continue to : [SSD]             
+ Redirect to : [Remove Memory]   
+Task Name    : [Remove Memory]   [1]
+ Continue to : [Memory]          
+Task Name    : [SSD]             [4]
+ Continue to : [GPU]             
+ Redirect to : [Remove SSD]      
+Task Name    : [Remove SSD]      [1]
+ Continue to : [SSD]             
+Task Name    : [GPU]             [3]
+ Continue to : [Test]            
+Task Name    : [Test]            [4]
+ Continue to : [Approve]         
+ Redirect to : [Repair]          
+Task Name    : [Repair]          [1]
+Task Name    : [Approve]         [1]
+
+Done!
+Press Enter Key to Exit ... 
+thsaulon@matrix:~/Courses/OOP345/MS1> ms1[K[K[Kexit
+exit
+
+Script done on Tue 20 Mar 2018 09:35:26 PM EDT

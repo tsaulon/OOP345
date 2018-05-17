@@ -1,0 +1,109 @@
+Script started on Mon 05 Feb 2018 10:03:01 PM EST
+thsaulon@matrix:~/Courses/OOP345/w2> whoami
+thsaulon
+thsaulon@matrix:~/Courses/OOP345/w2> cat.[K Text.cpp[K[K[K[K[K[K[K[KSouez[K[Krce.cpp
+// Workshop 3 - Copy and Move Semantics
+// w3.cpp
+
+#include <iostream>
+#include <iomanip>
+#include <utility>
+#include <ctime>
+#include "Text.h"
+#define TIME(start, end) double((end) - (start)) / CLOCKS_PER_SEC
+
+int main(int argc, char* argv[]) {
+	if (argc == 1) {
+		std::cerr << argv[0] << ": missing file operand\n";
+		return 1;
+	}
+	else if (argc != 2) {
+		std::cerr << argv[0] << ": too many arguments\n";
+		return 2;
+	}
+	std::clock_t cs, ce;
+	{
+		std::cout << std::fixed << std::setprecision(3);
+		cs = std::clock();
+		w3::Text a;
+		ce = std::clock();
+		std::cout << "Constructor      " << TIME(cs, ce) << " seconds";
+		std::cout << " - a.size = " << a.size() << std::endl;
+
+		cs = std::clock();
+		w3::Text b(argv[1]);
+		ce = std::clock();
+		std::cout << "Constructor      " << TIME(cs, ce) << " seconds";
+		std::cout << " - b.size = " << b.size() << std::endl;
+
+		cs = std::clock();
+		a = b;
+		ce = std::clock();
+		std::cout << "Copy Assignment  " << TIME(cs, ce) << " seconds";
+		std::cout << " - a.size = " << a.size() << std::endl;
+
+		cs = std::clock();
+		a = std::move(b);
+		ce = std::clock();
+		std::cout << "Move Assignment  " << TIME(cs, ce) << " seconds";
+		std::cout << " - a.size = " << a.size() << std::endl;
+
+		cs = std::clock();
+		w3::Text c = a;
+		ce = std::clock();
+		std::cout << "Copy Constructor " << TIME(cs, ce) << " seconds";
+		std::cout << " - c.size = " << c.size() << std::endl;
+
+		cs = std::clock();
+		w3::Text d = std::move(a);
+		ce = std::clock();
+		std::cout << "Move Constructor " << TIME(cs, ce) << " seconds";
+		std::cout << " - d.size = " << d.size() << std::endl;
+
+		cs = std::clock();
+	}
+	ce = std::clock();
+	std::cout << "Destructor       " << TIME(cs, ce) << " seconds\n";
+
+	return 0;
+}thsaulon@matrix:~/Courses/OOP345/w2> cat Text.cpp[K[K[K[K[K[K[K[K[K[K[K[Kcat Source.cpp[8Pwhoami[2Pexitcd Coursesls[Kexit[2Plsclearw1 op244 btp678 nat112ls[Kcleard w1w1 asdf asdf asdfls[Kcd Courses/OOP345ls[Kclear[1Pexitw1 oop345 dbs201 nat112[Klscd w1lear[3Plsmv wk1 w1ls[Krm -r Doxyfile Kingdom.h html latexls[Kcd OOP345[4Plear[3Plscd Coursesls[Kexitdoxygen Doxyfile-g[Kls[Krm -r html latex Doxyfile[3P[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls[Kdoxygen Doxyfilels[Kdoxygen Doxyfile-g[K[3PDoxygen -gls[Kcat w1.txtls[Kclearscript w1.txtls[Kclear[3Plscat w1.txtls[Kscript w1.txtls[Krm a.outls[Kg++ -o w1 CString.cpp Process.cpp main.cpp[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls[Kg++ -o w1 CString.cpp Process.cpp main.cpp[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls[Ka.out adf lkj qwer[1@;[C[C[C[C[C[C[C[C[Kg++ -o a.out CString.cpp Process.cpp main.cppp[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ca.out [K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o a.out CString.cpp Process.cpp main.cppp[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ca.out[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C adf ;lkj qwer[1P[C[C[C[C[C[C[C[Cls[Kg++ -o w1 CString.cpp Process.cpp main.cpp[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls[Krm a.outls[Kscript w1.txtls[Kcat w1.txtls[Kclear[3Plsscript w1.txt[8Pclear[3Plscat w1.txtls[KDoxygen -g[Kdoxygen -gDoxyfilels[Kdoxygen Doxyfilels[Krm html latex Doxyfile[3@-r [C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls[Kdoxygen -gDoxyfileexit[K[2Plscd Coursesls[Kcleard OOP345ls[Krm -r Doxyfile Kingdom.h html latexls[Kmv wk1 w1ls[Kcleard w1[3Plsw1 oop345 dbs201 nat112exit[Kclear[3Plscd Courses/OOP345ls[Kw1 asdf asdf asdfcd w1[Klear[3Plsw1 op244 btp678 nat112clear[K[3Plsexit[2Plscd Courses[6Pexitwhoamicat Source.cpp[Kcat Source.cpp[8Pwhoami[2Pexitcd Coursesls[Kexit[2Plsclearw1 op244 btp678 nat112ls[Kcleard w1w1 asdf asdf asdfls[Kcd Courses/OOP345ls[Kclear[1Pexitw1 oop345 dbs201 nat112[Klscd w1lear[3Plsmv wk1 w1ls[Krm -r Doxyfile Kingdom.h html latexls[Kcd OOP345ls[Krm -r Doxyfile Kingdom.h html latexls[Kcd OOP345[4Plear[3Plscd Coursesls[Kexitdoxygen Doxyfile-g[Kls[Krm -r html latex Doxyfile[3P[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls[Kdoxygen Doxyfilels[Kdoxygen Doxyfile-g[K[3PDoxygen -gls[Kcat w1.txtls[Kclearscript w1.txtls[Kclear[3Plscat w1.txtls[Kscript w1.txtls[Krm a.outls[Kg++ -o w1 CString.cpp Process.cpp main.cpp[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls[Ka.out adf lkj qwer[1@;[C[C[C[C[C[C[C[C[Kg++ -o a.out CString.cpp Process.cpp main.cppp[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ca.out [K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Coop345 dbs201[Kg++ -o a.out CString.cpp Process.cpp main.cppp[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ca.out [K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Coop345 dbs201g++ -o a.out CString.cpp Process.cpp main.cppp[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[24Pa.out oop345 dbs201
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o a.out CString.cpp Process.cpp main.cppp[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[24Pa.out oop244 dbs201
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o a.out CString.cpp Process.cpp main.cppp[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[24Pa.out oop244 dbs201
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o a.out CString.cpp Process.cpp main.cppp[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[24Pa.out oop345 dbs201
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o a.out CString.cpp Process.cpp main.cppp[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[23Pa.out oop233 oop2345
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o a.out CString.cpp Process.cpp main.cppp[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[24Pa.out oop345 btp305
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o a.out CString.cpp Process.cpp main.cppp[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[24Pa.out oop244 dbs201
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o a.out CString.cpp Process.cpp main.cppp[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ca.out[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o a.out CString.cpp Process.cpp main.cppp[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ca.out[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o a.out CString.cpp Process.cpp main.cppp[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ca.out[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o a.out CString.cpp Process.cpp main.cppp[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccleara.out[3Plscd wk1[4Plscd Courses/OOP345exit[K[2Pw1 oop345 btp305g++ -o w1 main.cpp CString.cpp Process.cpp[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[CG[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccat main.cpp[KG++ -o w1 main.cpp CString.cpp Process.cpp[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[CG[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccat main.cpp[K[6Pwhoami[2Pexit[2Pw1 oop345 btp305g++ -o w1 CString.cpp Process.cpp main.cpp[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccat main.cpp[K[6Pwhoamicat main.cpp[30@g++ -o w1 CString.cpp Process.cpp[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccat main.cpp[K[6Pwhoami[1Pa.outg++ -o a.out CString.cpp Process.cpp main.cppp[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ca.out[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o a.out CString.cpp Process.cpp main.cppp[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[CCString.cpp Process.cpp main.cpp[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ca.out[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[3Plsg++ -o a.out -std=c++0x CString.cpp Process..cpp main.cpp[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccd wk1[1Plear[3Plsclearls latex[1Phtml[Kdoxygen Doxyfilels[Kclearat Doxyfilels[Kcat Kingdom.hls[Kdoxygen -g[5Pclear[3Plscd OOP345[4Plear[3Plsmkdir OOP345ls[Kcd Coursesls[Kclear[3Plscat NonPerishable.h[1Ph[4PPerishablels[Kclear[3Plscat Product.hls[Kclearat NonPerishable.cppls[Kclear[3Plscd MS5[4Plscd Courses/OOP244ls[Kclear[3Plsexit~cornel.barna/submit 244_w9_homecd ../home[Kls[K~cornel.barna/submit 244_w9_home[1Plabg++ -o a.out -std=c++0x Data.cpp ws9_lab.cppp[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cclear[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C~cornel.barna/submit 244_w9_labg++ -o a.out -std=c++0x Data.cpp ws9_lab.cppp[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cclear[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o a.out -std=c++0x Data.cpp ws9_lab.cppp[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cclear[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o a.out -std=c++0x Data.cpp ws9_lab.cppp[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cclear[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o a.out -std=c++0x Data.cpp ws9_lab.cppp[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cclear[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o a.out -std=c++0x Data.cpp ws9_lab.cppp[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cclear[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o a.out -std=c++0x Data.cpp ws9_lab.cppp[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[KSource.cpp Text.cpp [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P[1P[1P[1P[1@w[1@2
+thsaulon@matrix:~/Courses/OOP345/w2> w2 gutenberg_shakespeare.txt 
+Constructor      0.000 seconds - a.size = 0
+Constructor      0.070 seconds - b.size = 64807
+Copy Assignment  0.000 seconds - a.size = 64807
+Move Assignment  0.010 seconds - a.size = 64807
+Copy Constructor 0.010 seconds - c.size = 64807
+Move Constructor 0.000 seconds - d.size = 64807
+Destructor       0.030 seconds
+thsaulon@matrix:~/Courses/OOP345/w2> w2
+w2: missing file operand
+thsaulon@matrix:~/Courses/OOP345/w2> exit
+exit
+
+Script done on Mon 05 Feb 2018 10:06:15 PM EST

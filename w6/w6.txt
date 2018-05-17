@@ -1,0 +1,192 @@
+Script started on Mon 02 Apr 2018 08:32:32 PM EDT
+thsaulon@matrix:~/Courses/OOP345/w6> whoami
+thsaulon
+thsaulon@matrix:~/Courses/OOP345/w6> cat Product.cpp
+#include <iomanip>
+#include <iostream>
+#include "Product.h"
+
+namespace w7 {
+	Product::Product() : prodNum{ 0 }, cost{ 0 } {}
+
+	Product::Product(unsigned _prod, float _cost) : prodNum{ _prod }, cost{ _cost } {}
+
+	Product::~Product()
+	{
+	}
+
+	double Product::getCharge() const 
+	{
+		return this->cost;
+	}
+
+	void Product::display(std::ostream& os) const
+	{
+		os << std::right << std::setw(10) << this->prodNum << std::setw(10) << std::fixed << std::setprecision(2) << Product::getCharge() << std::setprecision(0);
+	}
+}
+
+thsaulon@matrix:~/Courses/OOP345/w6> cat TaxableProduct.cpp
+#include "TaxableProduct.h"
+
+namespace w7 {
+	TaxableProduct::TaxableProduct() : taxStatus{ ' ' }
+	{
+		tax[H] = 1.13;
+		tax[P] = 1.08;
+	}
+
+	TaxableProduct::TaxableProduct(unsigned _prod, float _cost, char _taxStatus) : taxStatus{ _taxStatus }, Product::Product(_prod, _cost)
+	{
+		tax[H] = 1.13;
+		tax[P] = 1.08;
+	}
+
+	double TaxableProduct::getCharge() const
+	{
+		Rate rate;
+
+		switch (this->taxStatus)
+		{
+		case 'H':
+			rate = H;
+			break;
+		case 'P':
+			rate = P;
+			break;
+		}
+
+		return Product::getCharge() * tax[rate];
+	}
+
+	void TaxableProduct::display(std::ostream& os) const
+	{
+		Product::display(os);
+		os << " ";
+
+		if (this->taxStatus == 'H')
+		{
+			os << "HST";
+		}
+		else
+		{
+			os << "PST";
+		}
+	}
+}
+
+thsaulon@matrix:~/Courses/OOP345/w6> cat Sale.cpp
+#include <fstream>
+#include <vector>
+#include <iostream>
+#include <string>
+#include <iomanip>
+#include "TaxableProduct.h"
+#include "Product.h"
+#include "Sale.h"
+
+namespace w7 {
+	Sale::Sale(const char* file) : total{ 0 }
+	{
+		iProduct* x;
+		std::ifstream f;
+
+		f.open(file);
+
+		if (f.is_open())
+		{
+			while ((x = readProduct(f)) != nullptr)
+			{
+				productList.push_back(x);
+			}
+				
+		}
+
+		f.close();
+	}
+
+
+	Sale::~Sale()
+	{
+	}
+
+	void Sale::display(std::ostream& os)
+	{
+		os << std::setw(10) << "Product No      " << std::right << "Cost Taxable" << std::endl;
+
+		for (auto& x : productList)
+		{
+			x->display(os);
+			os << std::endl;
+			total += x->getCharge();
+		}
+
+		os << std::setw(10) << "Total" << std::fixed << std::setprecision(2) << std::setw(10) << total << std::endl;
+	}
+
+	iProduct* readProduct(std::ifstream& fs)
+	{
+		iProduct* x = nullptr;
+		unsigned pNum;
+		float cost;
+		char status = '\0';
+
+		std::string tmp;
+
+		std::getline(fs, tmp, '\n');
+
+		if (!tmp.empty())
+		{
+			pNum = std::stoi(tmp.substr(0, tmp.find_first_of(' ')));
+
+			//check if status exists
+			unsigned next = tmp.find_last_of(' ');
+
+			//if exists
+			if (next == tmp.find_first_of(' '))
+			{
+				cost = std::stof(tmp.substr(tmp.find_first_of(' '), tmp.find_last_of('\n')));
+			}
+			else 
+			{
+				cost = std::stof(tmp.substr(tmp.find_first_of(' '), tmp.find_last_of(' ')));
+				status = tmp[tmp.length() - 1];
+			}
+
+			//create object
+			x = (status == '\0') ? new Product(pNum, cost) : new TaxableProduct(pNum, cost, status);
+		}
+
+		return x;
+	}
+
+	std::ostream& operator<<(std::ostream& os, const iProduct& obj)
+	{
+		obj.display(os);
+
+		return os;
+	}
+}
+thsaulon@matrix:~/Courses/OOP345/w6> cat Sale.cppTaxableProduct.cpp[7PProduct.cpp[9Pwhoamicat Task.hls[Kcd Courses/OOP345/MS1[2Pat NonPerishable.h[3PPerishable.hls[Kcd Courses/OOP244/MS4lear[Kscript ms2.txtls[Kcleardoxygen Doxyfile-g[Kls[Kg++ -o ms2 -std=c++0x Task.cpp Utilities.cppp Item.cpp CustomerItem.cpp CustomerOrder.cpp Milestone_2.cpp [Als[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o ms2 -std=c++0x Task.cpp Utilities.cppp Item.cpp CustomerItem.cpp CustomerOrder.cpp Milestone_2.cpp [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1P -std=c++0x[1P -std=c++0x[1P -std=c++0xw -std=c++0x6 -std=c++0x[C[C[C[C[C[C[C[C[C[C[C Product.cpp TaxableProdduct.cpp Salec[K.cpp w6.cpp 
+thsaulon@matrix:~/Courses/OOP345/w6> w6 Sales.dat 
+Product No      Cost Taxable
+     10012     34.56
+     10023     45.67 HST
+     10234     12.32 PST
+     10056     67.54
+     10029     54.12 HST
+     10034     96.30
+     Total    324.47
+
+Press any key to continue ... exit
+thsaulon@matrix:~/Courses/OOP345/w6> cle[K[K[Kls
+[0m[00mProduct.cpp[0m  [00mSale.cpp[0m  [00mSales.dat[0m           [00mTaxableProduct.h[0m  [00;32mw6[0m      [00mw6.txt[0m
+[00mProduct.h[0m    [00mSale.h[0m    [00mTaxableProduct.cpp[0m  [00miProduct.h[0m        [00mw6.cpp[0m
+thsaulon@matrix:~/Courses/OOP345/w6> cat w6.txt
+thsaulon@matrix:~/Courses/OOP345/w6> cat w6.txt
+thsaulon@matrix:~/Courses/OOP345/w6> exit
+exit
+
+Script done on Mon 02 Apr 2018 08:34:11 PM EDT

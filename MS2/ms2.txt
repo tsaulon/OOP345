@@ -1,0 +1,458 @@
+Script started on Wed 28 Mar 2018 07:11:25 PM EDT
+thsaulon@matrix:~/Courses/OOP345/MS2> whoami
+thsaulon
+thsaulon@matrix:~/Courses/OOP345/MS2> ct[Kat CustomerItem.cpp CustomerOrder.cpp Itemm.cpp m[KMilestone_2.cpp 
+#include "CustomerItem.h"
+#include "Item.h"
+#include <iomanip>
+
+CustomerItem::CustomerItem(const std::string& str) : code{ 0 }, filled{ false }
+{
+	this->name.assign(str);
+}
+
+bool CustomerItem::asksFor(const Item& x) const
+{
+	return this->getName() == x.getName();
+}
+
+bool CustomerItem::isFilled() const
+{
+	return this->filled;
+}
+
+void CustomerItem::fill(const unsigned int itemCode)
+{
+	this->code = itemCode;
+	this->filled = true;
+}
+
+void CustomerItem::clear()
+{
+	this->filled = false;
+	this->code = 0;
+}
+
+const std::string& CustomerItem::getName() const
+{
+	return this->name;
+}
+
+void CustomerItem::display(std::ostream& os) const
+{
+	os << ((isFilled()) ? '+' : '-') << " [" << std::right << std::setw(CODE_WIDTH) << std::setfill('0') << code << "] " << std::setfill(' ') << this->getName() << std::endl;
+}#include "CustomerOrder.h"
+#include "CustomerItem.h"
+#include "Utilities.h"
+#include "Item.h"
+#include <vector>
+#include <string>
+#include <iomanip>
+
+size_t CustomerOrder::field_width = 0;
+
+CustomerOrder::CustomerOrder(const std::string& str) : nOrders{ 0 }, order{ nullptr }
+{
+	Utilities x;
+	size_t next_pos = 0;
+	bool more = true;
+
+	this->name = x.nextToken(str, next_pos, more);
+	this->product = x.nextToken(str, next_pos, more);
+
+	//extract orders
+	std::vector<std::string> orders;
+	while (more)
+	{
+		std::string tmp = x.nextToken(str, next_pos, more);
+
+		if (!tmp.empty())
+		{
+			orders.push_back(tmp);
+		}
+	}
+
+	//Dynamically allocate and populate order from orders vector object.
+	this->nOrders = orders.size();
+	this->order = new CustomerItem[nOrders];
+
+	for (size_t i = 0; i < orders.size(); i++)
+	{
+		this->order[i] = CustomerItem(orders[i]);
+	}
+
+	//set field_width
+	if (x.getFieldWidth() > this->field_width)
+	{
+		this->field_width = x.getFieldWidth();
+	}
+}
+
+CustomerOrder::CustomerOrder(const CustomerOrder&)
+{
+	throw std::string("Copy constructor called - duplicates are not allowed.");
+}
+
+CustomerOrder::CustomerOrder(CustomerOrder&& object) NOEXCEPT : nOrders{ 0 }, order { nullptr }
+{
+	*this = std::move(object);
+}
+
+CustomerOrder&& CustomerOrder::operator=(CustomerOrder&& object) NOEXCEPT
+{
+	//check if same address
+	if (this != &object)
+	{
+		//check if order object array is populated
+		if (order)
+		{
+			delete[] order;
+			order = nullptr;
+		}
+		
+		//copy and assign
+		this->name = object.name;
+		this->product = object.product;
+		this->nOrders = object.noOrders();
+		this->order = object.order;
+
+		//set object to empty state
+		object.order = nullptr;
+		object.nOrders = 0;
+	}
+
+	return std::move(*this);
+}
+
+CustomerOrder::~CustomerOrder()
+{
+	delete[] order;
+}
+
+unsigned int CustomerOrder::noOrders() const
+{
+	return this->nOrders;
+}
+
+const std::string& CustomerOrder::operator[](unsigned int index) const
+{
+	if (index > noOrders())
+	{
+		throw "Index is out of bounds.";
+	}
+
+	return this->order[index].getName();
+}
+
+void CustomerOrder::fill(Item& x)
+{
+	for (size_t i = 0; i < this->nOrders; i++)
+	{
+		if (this->order[i].getName() == x.getName() && !order[i].isFilled())
+		{
+			this->order[i].fill(x.getCode());
+			x++;
+		}
+	}
+}
+
+void CustomerOrder::remove(Item& x)
+{
+	for (size_t i = 0; i < this->nOrders; i++)
+	{
+		if (this->order[i].getName() == x.getName())
+		{
+			this->order[i].clear();
+		}
+	}
+}
+
+bool CustomerOrder::empty() const
+{
+	return this->name.empty();
+}
+
+void CustomerOrder::display(std::ostream& os) const
+{
+	os << std::left << std::setw(field_width) << this->name + " : " << std::setw(field_width) << this->product << std::endl;
+	for (size_t i = 0; i < noOrders(); i++)
+	{
+		order[i].display(os);
+	}
+}#include "Item.h"
+#include "Utilities.h"
+#include <iomanip>
+#include <iostream>
+
+size_t Item::field_width = 0;
+
+Item::Item(const std::string& str) : code{ 1 }
+{
+
+	Utilities x;
+	size_t next_pos = 0;
+	bool more = true;
+
+	this->name = x.nextToken(str, next_pos, more);
+	if (this->name.empty())
+	{
+		throw std::string("No name specified");
+	}
+
+	this->filler = x.nextToken(str, next_pos, more);
+	if (this->filler.empty())
+	{
+		throw std::string("No task specified");
+	}
+
+	this->remover = x.nextToken(str, next_pos, more);
+	if (this->remover.empty())
+	{
+		throw std::string("No remover specified");
+	}
+
+	this->code = std::stoi(x.nextToken(str, next_pos, more));
+
+	this->description = x.nextToken(str, next_pos, more);
+	if (this->description.empty())
+	{
+		this->description = "no detailed description";
+	}
+	
+	if(getName().length() > field_width)
+	{
+		field_width = x.getFieldWidth();
+	}
+}
+
+bool Item::empty() const
+{
+	return this->name.empty();
+}
+
+Item& Item::operator++(int)
+{
+	code++;
+
+	return *this;
+}
+
+unsigned int Item::getCode() const
+{
+	return this->code;
+}
+
+const std::string& Item::getName() const
+{
+	return this->name;
+}
+
+const std::string& Item::getFiller() const
+{
+	return this->filler;
+}
+
+const std::string& Item::getRemover() const
+{
+	return this->remover;
+}
+
+void Item::display(std::ostream& os, bool full) const
+{
+	os << std::left << std::setfill(' ') << std::setw(field_width) << getName();
+	os << '[' << std::right << std::setfill('0') << std::setw(CODE_WIDTH) << getCode() << ']';
+
+	if (full)
+	{
+		os << std::left << std::setfill(' ') << std::setw(field_width) << " From " + getFiller();
+		os << std::setw(field_width) << " To " + getRemover();
+		os << std::endl;
+		os << std::setw(field_width + CODE_WIDTH + 3) << std::right << " : " << this->description;
+	}
+
+	os << std::endl;
+}// CustomerOrder Milestone - Main Program
+// Milestone_2.cpp
+// Chris Szalwinski
+// v1.0 - 9/11/2015
+// v1.1 - 9/11/2015 - customerOrder -> customerOrders for g++ 5.2 compatability (CS)
+// v1.2 - 16/11/2015 - add <cstdlib> for exit (CS)
+// v2.0 - 15/01/2016
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cstdlib>
+#include <vector>
+#include <memory>
+#include "CustomerOrder.h"
+#include "Utilities.h"
+#include "Item.h"
+
+template<typename T>
+void loadFromFile(const char*, std::vector<T>&, std::ostream&);
+
+int main(int argc, char** argv) {
+	
+	// process command line arguments
+	if (argc != 4) {
+		std::cerr << "*** invalid number of arguments ***\n"
+			<< "Usage: " << argv[0] << " customer_order_file item_file delimiter\n";
+		exit(1);
+	}
+	std::cout << "Command Line Arguments\n----------------------\n";
+	std::cout << "Customer Order File Specified = " << argv[1] << "\n";
+	std::cout << "Item File Specified           = " << argv[2] << "\n";
+	std::cout << "File Record Field Delimiter   = " << argv[3][0] << "\n\n";
+	Utilities::setDelimiter(argv[3][0]);
+	// end of command line processing
+
+	
+	// Load, Accept and Display the Customer Orders
+	//
+	std::cout << "\n*** Load and Accept the Customer Orders ***\n";
+	std::vector<CustomerOrder> customerOrders;
+	loadFromFile(argv[1], customerOrders, std::cerr);
+	std::cout << "\nList of Accepted Customer Orders\n--------------------------------\n";
+	for (auto& s : customerOrders)
+		s.display(std::cout);
+		
+
+	// Load, Accept and Display the Items in Stock
+	//
+	std::cout << "\n*** Load and Accept the Items in Stock ***\n";
+	std::vector<Item> items;
+	loadFromFile(argv[2], items, std::cerr);
+	std::cout << "\nList of Items in Stock\n----------------------\n";
+	for (auto& i : items)
+		i.display(std::cout, true);
+
+	
+	// Fill the Customer Orders with the Items in Stock
+	//
+	std::cout << "\n*** Process the Customer Orders ***\n";
+	for (auto& i : items)
+		for (auto& s : customerOrders)
+			s.fill(i);
+
+	// Display the Processed Customer Orders
+	//
+	std::cout << "\nList of Processed Customer Orders\n---------------------------------\n";
+	for (auto& s : customerOrders)
+		s.display(std::cout);
+		
+	// Terminate
+	//
+	std::cout << "\nDone!\nPress Enter Key to Exit ... ";
+	char c;
+	std::cin.get(c);
+
+	return 0;
+}
+
+template<typename T>
+void loadFromFile(const char* fileName, std::vector<T>& collection, std::ostream& os) {
+	std::ifstream file(fileName);
+	if (!file) {
+		os << "*** Cannot open file named " << fileName << " ***\n";
+		exit(1);
+	}
+	while (file) {
+		std::string record;
+		std::getline(file, record);
+		if (file) {
+			try {
+				std::unique_ptr<T> entry(new T(record));
+				if (!entry->empty())
+					collection.push_back(std::move(*entry));
+			}
+			catch (const std::string& msg) {
+				os << msg << std::endl;
+			}
+		}
+	}
+}thsaulon@matrix:~/Courses/OOP345/MS2> cat CustomerItem.cpp CustomerOrder.cpp Itemm.cpp Milestone_2.cpp [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cwhoami[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[4Plscd Courses/OOP345/MS2ls[Kms2 CustomerOrders_Whitespace.dat ItemList__Whitespace.dat "|"[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o ms2 -std=c++0x Task.cpp Utilities.cpp Item.cpp CustomerItem.cpp CustomerOrder.cpp Milestone_2.cpp 
+thsaulon@matrix:~/Courses/OOP345/MS2> ms2[K[K[Kg++ -o ms2 -std=c++0x Task.cpp Utilities.cppp Item.cpp CustomerItem.cpp CustomerOrder.cpp Milestone_2.cpp [Acat CustomerItem.cpp CustomerOrder.cpp Item[41P[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cwhoami[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[4Plscd Courses/OOP345/MS2ls[Kms2 CustomerOrders_Whitespace.dat ItemList__Whitespace.dat "|"[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o ms2 -std=c++0x Task.cpp Utilities.cpp Item.cpp CustomerItem.cpp CustomerOrder.cpp Milestone_2.cpp [Aclear[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cms2 CustomerOrders_Whitespace.dat ItemList__Whitespace.dat "|"[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1Plsmv ms1 ms2ls[Kg++ -o ms1 -std=c++0x Task.cpp Utilities.cppp Item.cpp CustomerItem.cpp CustomerOrder.cpp Milestone_2.cpp [Als[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccd MS2Courses/OOP345ls[Kexitms1 TaskList_Whitespace.dat "|"g++ -o ms1 -std=c++0x Task.cpp Utilities.cppp Milestone_1.cpp [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[14Pcat TaskList_Whitespace.dat 
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[8PMilestone_1.cpp[C[3PUtilities.cpp[2Ph[3PTask.cpp[2Ph[4Pwhoami[2Pexit[2Plscd w5[3Plscd OOP345ls[Kcd Courses/ls[Kclear[1Pr[2Plscat w6.txtls[Kscript w6.txtls[Kcd w5[3Plsclear[3Plscd OOP345/[Kls[Kcd ..ls w4cd ..mv w6.cpp w5.cppls[Kcd w5[3Plscd Courses/OOP345/exit[Ka.out gradeinfo.txtg++ -o a.out -std=c++0x w5.cpp Grades.cpp[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[24Pcat gradeinfo.txt[7Pw5.cppGrades.hcpp[8Pwhoami[4Plsmv w5.cpp w6.cppls[Kclear[3Plsmv w5.cpp w6.cppls[Kwhoamicat Grades.cpp[2Ph[2Pw5.cppgradeinfo.txtg++ -o a.out -std=c++0x w5.cpp Grades.cpp[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[22Pa.out gradeinfo.txtexit[Kcd Courses/OOP345/ls[Kcd w5[3Plsmv w6.cpp w5.cppcd ..[Kls w4cd ..[3Plscd OOP345/ls[Kclear[3Plscd w5[3Plsscript w6.txtls[Kcat w6.txtls[Kclerar[3Plscd Courses/ls[Kcd OOP345ls[Kcd w5[3Plsexitwhoamicat Task.hcppUtilities.hcppMilestone_1.cpp [8@TaskList_Whitespace.dat[Cg++ -o ms1 -std=c++0x Task.cpp Utilities.cppp Milestone_1.cpp [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[11Pms1 TaskList_Whitespace.dat "|"
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cexit[K[2Plscd Courses/OOP345MS2[K[4Plsg++ -o ms1 -std=c++0x Task.cpp Utilities.cppp Item.cpp CustomerItem.cpp CustomerOrder.cpp Milestone_2.cpp [Als[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cmv ms1 ms2ls[Kms2 CustomerOrders_Whitespace.dat ItemList__Whitespace.dat "|"[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cclear[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o ms2 -std=c++0x Task.cpp Utilities.cppp Item.cpp CustomerItem.cpp CustomerOrder.cpp Milestone_2.cpp [Ams2 CustomerOrders_Whitespace.dat ItemList_Whitespace.dat "|"[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccd Courses/OOP345/MS2ls[Kwhoamicat CustomerItem.cpp CustomerOrder.cpp Itemm.cpp Milestone_2.cpp [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o ms2 -std=c++0x Task.cpp Utilities.cp[41@p Item.cpp CustomerItem.cpp CustomerOrder[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[A[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o ms2 -std=c++0x Task.cpp Utilities.cppp Item.cpp CustomerItem.cpp CustomerOrder.cpp Milestone_2.cpp [Acat CustomerItem.cpp CustomerOrder.cpp Item[41P[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cwhoami[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[4Plscd Courses/OOP345/MS2ls[Kms2 CustomerOrders_Whitespace.dat ItemList__Whitespace.dat "|"[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o ms2 -std=c++0x Task.cpp Utilities.cpp Item.cpp CustomerItem.cpp CustomerOrder.cpp Milestone_2.cpp [Aclear[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cms2 CustomerOrders_Whitespace.dat ItemList__Whitespace.dat "|"[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cclear[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o ms2 -std=c++0x Task.cpp Utilities.cppp Item.cpp CustomerItem.cpp CustomerOrder.cpp Milestone_2.cpp [Ams2 CustomerOrders_Whitespace.dat ItemList_Whitespace.dat "|"[K
+Command Line Arguments
+----------------------
+Customer Order File Specified = CustomerOrders_Whitespace.dat
+Item File Specified           = ItemList_Whitespace.dat
+File Record Field Delimiter   = |
+
+
+*** Load and Accept the Customer Orders ***
+
+List of Accepted Customer Orders
+--------------------------------
+Fardad Soleimanloo : Dell Precision 3600
+- [00000] CPU
+- [00000] Memory
+- [00000] Memory
+Joseph Hughes :    HP Z230            
+- [00000] CPU
+- [00000] Memory
+Chris Szalwinski : HP Z350            
+- [00000] CPU
+- [00000] Memory
+- [00000] SSD
+- [00000] GPU
+Elliott Coleshill : HP Apollo 1000     
+- [00000] CPU
+- [00000] MEMORY
+- [00000] Power Supply
+- [00000] GPU
+
+*** Load and Accept the Items in Stock ***
+
+List of Items in Stock
+----------------------
+CPU                    [00300] From CPU               To Remove CPU         
+                             : Central Processing Unit
+Memory                 [00400] From Memory            To Remove Memory      
+                             : Samsung Memory Stick
+GPU                    [00500] From GPU               To Remove GPU         
+                             : Nvidia Geforce 750M
+Power Supply           [00100] From Power Supply      To Remove Power Supply
+                             : no detailed description
+
+*** Process the Customer Orders ***
+
+List of Processed Customer Orders
+---------------------------------
+Fardad Soleimanloo : Dell Precision 3600
++ [00300] CPU
++ [00400] Memory
++ [00401] Memory
+Joseph Hughes :    HP Z230            
++ [00301] CPU
++ [00402] Memory
+Chris Szalwinski : HP Z350            
++ [00302] CPU
++ [00403] Memory
+- [00000] SSD
++ [00500] GPU
+Elliott Coleshill : HP Apollo 1000     
++ [00303] CPU
+- [00000] MEMORY
++ [00100] Power Supply
++ [00501] GPU
+
+Done!
+Press Enter Key to Exit ... 
+thsaulon@matrix:~/Courses/OOP345/MS2> exit
+exit
+
+Script done on Wed 28 Mar 2018 07:15:11 PM EDT

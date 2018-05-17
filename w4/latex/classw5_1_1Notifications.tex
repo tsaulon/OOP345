@@ -1,0 +1,89 @@
+\hypertarget{classw5_1_1Notifications}{}\section{w5\+:\+:Notifications Class Reference}
+\label{classw5_1_1Notifications}\index{w5\+::\+Notifications@{w5\+::\+Notifications}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classw5_1_1Notifications_af5482f22a6d4ad6c55256123776c8870}{Notifications}} ()
+\item 
+void \mbox{\hyperlink{classw5_1_1Notifications_a9cca3e863b2e21351fdfc096386adc1e}{init}} (const \mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} \&)
+\item 
+\mbox{\hyperlink{classw5_1_1Notifications_a7fbdc734f79281a93523b7c7e8ec3c97}{Notifications}} (const \mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} \&)
+\item 
+\mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} \& \mbox{\hyperlink{classw5_1_1Notifications_ae61c37a0a75bef883aede67cac203bd0}{operator=}} (const \mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} \&)
+\item 
+\mbox{\hyperlink{classw5_1_1Notifications_aeefa688a71494e3779e2b50f3bd9b5e7}{Notifications}} (\mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} \&\&)
+\item 
+\mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} \& \mbox{\hyperlink{classw5_1_1Notifications_a5a7b33d61d8ba367018f769975c9a98e}{operator=}} (\mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} \&\&)
+\item 
+\mbox{\hyperlink{classw5_1_1Notifications_a657e031fdb6442a8aacb968ce351c569}{$\sim$\+Notifications}} ()
+\item 
+void \mbox{\hyperlink{classw5_1_1Notifications_ab6331b2dc2d9af68e462fdaecb74b43d}{operator+=}} (const \mbox{\hyperlink{classw5_1_1Message}{Message}} \&msg)
+\item 
+void \mbox{\hyperlink{classw5_1_1Notifications_a0272d577ac9277d500118d635b460670}{display}} (std\+::ostream \&os) const
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classw5_1_1Notifications_af5482f22a6d4ad6c55256123776c8870}\label{classw5_1_1Notifications_af5482f22a6d4ad6c55256123776c8870}} 
+\index{w5\+::\+Notifications@{w5\+::\+Notifications}!Notifications@{Notifications}}
+\index{Notifications@{Notifications}!w5\+::\+Notifications@{w5\+::\+Notifications}}
+\subsubsection{\texorpdfstring{Notifications()}{Notifications()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily w5\+::\+Notifications\+::\+Notifications (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} Default Constructor that also sets an empty state. \mbox{\Hypertarget{classw5_1_1Notifications_a7fbdc734f79281a93523b7c7e8ec3c97}\label{classw5_1_1Notifications_a7fbdc734f79281a93523b7c7e8ec3c97}} 
+\index{w5\+::\+Notifications@{w5\+::\+Notifications}!Notifications@{Notifications}}
+\index{Notifications@{Notifications}!w5\+::\+Notifications@{w5\+::\+Notifications}}
+\subsubsection{\texorpdfstring{Notifications()}{Notifications()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily w5\+::\+Notifications\+::\+Notifications (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} \&}]{new\+Object }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} copy constructor \mbox{\Hypertarget{classw5_1_1Notifications_aeefa688a71494e3779e2b50f3bd9b5e7}\label{classw5_1_1Notifications_aeefa688a71494e3779e2b50f3bd9b5e7}} 
+\index{w5\+::\+Notifications@{w5\+::\+Notifications}!Notifications@{Notifications}}
+\index{Notifications@{Notifications}!w5\+::\+Notifications@{w5\+::\+Notifications}}
+\subsubsection{\texorpdfstring{Notifications()}{Notifications()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily w5\+::\+Notifications\+::\+Notifications (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} \&\&}]{new\+Object }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} move constructor that creates a \mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} object using a parametered Rvalue \mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} object \mbox{\Hypertarget{classw5_1_1Notifications_a657e031fdb6442a8aacb968ce351c569}\label{classw5_1_1Notifications_a657e031fdb6442a8aacb968ce351c569}} 
+\index{w5\+::\+Notifications@{w5\+::\+Notifications}!````~Notifications@{$\sim$\+Notifications}}
+\index{````~Notifications@{$\sim$\+Notifications}!w5\+::\+Notifications@{w5\+::\+Notifications}}
+\subsubsection{\texorpdfstring{$\sim$\+Notifications()}{~Notifications()}}
+{\footnotesize\ttfamily w5\+::\+Notifications\+::$\sim$\+Notifications (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} destructor which handles the lifecycle of the \mbox{\hyperlink{classw5_1_1Message}{Message}} objects that are stored inside the Notification object. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classw5_1_1Notifications_a0272d577ac9277d500118d635b460670}\label{classw5_1_1Notifications_a0272d577ac9277d500118d635b460670}} 
+\index{w5\+::\+Notifications@{w5\+::\+Notifications}!display@{display}}
+\index{display@{display}!w5\+::\+Notifications@{w5\+::\+Notifications}}
+\subsubsection{\texorpdfstring{display()}{display()}}
+{\footnotesize\ttfamily void w5\+::\+Notifications\+::display (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os }\end{DoxyParamCaption}) const}
+
+\mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} query function that outputs the Messages held inside the \mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} object\textquotesingle{}s \mbox{\hyperlink{classw5_1_1Message}{Message}} array. \mbox{\Hypertarget{classw5_1_1Notifications_a9cca3e863b2e21351fdfc096386adc1e}\label{classw5_1_1Notifications_a9cca3e863b2e21351fdfc096386adc1e}} 
+\index{w5\+::\+Notifications@{w5\+::\+Notifications}!init@{init}}
+\index{init@{init}!w5\+::\+Notifications@{w5\+::\+Notifications}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void w5\+::\+Notifications\+::init (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} \&}]{new\+Object }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} member function modifier to initialize the current object to the same state as the parametered \mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} object. \mbox{\Hypertarget{classw5_1_1Notifications_ab6331b2dc2d9af68e462fdaecb74b43d}\label{classw5_1_1Notifications_ab6331b2dc2d9af68e462fdaecb74b43d}} 
+\index{w5\+::\+Notifications@{w5\+::\+Notifications}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!w5\+::\+Notifications@{w5\+::\+Notifications}}
+\subsubsection{\texorpdfstring{operator+=()}{operator+=()}}
+{\footnotesize\ttfamily void w5\+::\+Notifications\+::operator+= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classw5_1_1Message}{Message}} \&}]{msg }\end{DoxyParamCaption})}
+
+Overloaded \mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} operator that adds a new \mbox{\hyperlink{classw5_1_1Message}{Message}} object to the \mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} object \mbox{\hyperlink{classw5_1_1Message}{Message}} array. \mbox{\Hypertarget{classw5_1_1Notifications_ae61c37a0a75bef883aede67cac203bd0}\label{classw5_1_1Notifications_ae61c37a0a75bef883aede67cac203bd0}} 
+\index{w5\+::\+Notifications@{w5\+::\+Notifications}!operator=@{operator=}}
+\index{operator=@{operator=}!w5\+::\+Notifications@{w5\+::\+Notifications}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} \& w5\+::\+Notifications\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} \&}]{new\+Object }\end{DoxyParamCaption})}
+
+Notificaitons copy assignment operator \mbox{\Hypertarget{classw5_1_1Notifications_a5a7b33d61d8ba367018f769975c9a98e}\label{classw5_1_1Notifications_a5a7b33d61d8ba367018f769975c9a98e}} 
+\index{w5\+::\+Notifications@{w5\+::\+Notifications}!operator=@{operator=}}
+\index{operator=@{operator=}!w5\+::\+Notifications@{w5\+::\+Notifications}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} \& w5\+::\+Notifications\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} \&\&}]{new\+Object }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} move assignment operator that sets a \mbox{\hyperlink{classw5_1_1Notifications}{Notifications}} object using a parametered Rvalue Notificationsn object 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Notifications.\+h\item 
+Notifications.\+cpp\end{DoxyCompactItemize}

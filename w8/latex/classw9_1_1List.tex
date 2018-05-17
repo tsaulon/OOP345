@@ -1,0 +1,44 @@
+\hypertarget{classw9_1_1List}{}\section{w9\+:\+:List$<$ T $>$ Class Template Reference}
+\label{classw9_1_1List}\index{w9\+::\+List$<$ T $>$@{w9\+::\+List$<$ T $>$}}
+
+
+{\ttfamily \#include $<$List.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classw9_1_1List_a73fb7f5d57a77b9ca4999d45034261c5}\label{classw9_1_1List_a73fb7f5d57a77b9ca4999d45034261c5}} 
+{\bfseries List} (const char $\ast$fn)
+\item 
+\mbox{\Hypertarget{classw9_1_1List_a2f95349bb7dc66b699dc0785e74b4c3c}\label{classw9_1_1List_a2f95349bb7dc66b699dc0785e74b4c3c}} 
+size\+\_\+t {\bfseries size} () const
+\item 
+\mbox{\Hypertarget{classw9_1_1List_a8b3cc4033e83a4714192349a1cfde9de}\label{classw9_1_1List_a8b3cc4033e83a4714192349a1cfde9de}} 
+const T \& {\bfseries operator\mbox{[}$\,$\mbox{]}} (size\+\_\+t i) const
+\item 
+void \mbox{\hyperlink{classw9_1_1List_a1bf4e702f53f727ec39dd7ced4fb850d}{operator+=}} (std\+::unique\+\_\+ptr$<$ T $>$ p)
+\item 
+\mbox{\Hypertarget{classw9_1_1List_a5b6bd398763c766a1e3b60fcd821ec34}\label{classw9_1_1List_a5b6bd398763c766a1e3b60fcd821ec34}} 
+void {\bfseries display} (std\+::ostream \&os) const
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class w9\+::\+List$<$ T $>$}
+
+Templated class called \mbox{\hyperlink{classw9_1_1List}{List}} that used typename T. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classw9_1_1List_a1bf4e702f53f727ec39dd7ced4fb850d}\label{classw9_1_1List_a1bf4e702f53f727ec39dd7ced4fb850d}} 
+\index{w9\+::\+List@{w9\+::\+List}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!w9\+::\+List@{w9\+::\+List}}
+\subsubsection{\texorpdfstring{operator+=()}{operator+=()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classw9_1_1List}{w9\+::\+List}}$<$ T $>$\+::operator+= (\begin{DoxyParamCaption}\item[{std\+::unique\+\_\+ptr$<$ T $>$}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Overloaded operator modified as per the workshop instructions; pushes a unique\+\_\+ptr to the list. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+List.\+h\end{DoxyCompactItemize}

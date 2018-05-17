@@ -1,0 +1,65 @@
+\hypertarget{classGrades}{}\section{Grades Class Reference}
+\label{classGrades}\index{Grades@{Grades}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classGrades_a2bbc5a8c929c273e62fe6a8b442ad0db}{Grades}} ()
+\item 
+\mbox{\Hypertarget{classGrades_acd4a639c3c0475a2f0a8da444887d12f}\label{classGrades_acd4a639c3c0475a2f0a8da444887d12f}} 
+{\bfseries Grades} (const char $\ast$file)
+\item 
+\mbox{\Hypertarget{classGrades_a879f56245c7f9deac988b1c05d55834b}\label{classGrades_a879f56245c7f9deac988b1c05d55834b}} 
+{\bfseries Grades} (const \mbox{\hyperlink{classGrades}{Grades}} \&)=delete
+\item 
+\mbox{\Hypertarget{classGrades_acc16ca4740ae5d3e21fb0872551af088}\label{classGrades_acc16ca4740ae5d3e21fb0872551af088}} 
+{\bfseries Grades} (const \mbox{\hyperlink{classGrades}{Grades}} \&\&)=delete
+\item 
+\mbox{\Hypertarget{classGrades_ab21a7375984e78538fd995f393b81fbc}\label{classGrades_ab21a7375984e78538fd995f393b81fbc}} 
+\mbox{\hyperlink{classGrades}{Grades}} \& {\bfseries operator=} (const \mbox{\hyperlink{classGrades}{Grades}} \&)=delete
+\item 
+\mbox{\Hypertarget{classGrades_ac48c966160770994a68cabd92f9a915b}\label{classGrades_ac48c966160770994a68cabd92f9a915b}} 
+\mbox{\hyperlink{classGrades}{Grades}} \& {\bfseries operator=} (const \mbox{\hyperlink{classGrades}{Grades}} \&\&)=delete
+\item 
+\mbox{\hyperlink{classGrades_a2838d5659c59892f54fa2d674cb68597}{$\sim$\+Grades}} ()
+\item 
+void \mbox{\hyperlink{classGrades_aa2979504b1668bd2d28d70c76697dd4d}{read\+Records}} (const char $\ast$a\+File, bool save=false)
+\item 
+{\footnotesize template$<$typename Func $>$ }\\void \mbox{\hyperlink{classGrades_a21957de7c89d7e51ef85b9d41d1264ef}{display\+Grades}} (std\+::ostream \&os, Func func) const
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classGrades_a2bbc5a8c929c273e62fe6a8b442ad0db}\label{classGrades_a2bbc5a8c929c273e62fe6a8b442ad0db}} 
+\index{Grades@{Grades}!Grades@{Grades}}
+\index{Grades@{Grades}!Grades@{Grades}}
+\subsubsection{\texorpdfstring{Grades()}{Grades()}}
+{\footnotesize\ttfamily Grades\+::\+Grades (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Class default constructor that defines an empty state. \mbox{\Hypertarget{classGrades_a2838d5659c59892f54fa2d674cb68597}\label{classGrades_a2838d5659c59892f54fa2d674cb68597}} 
+\index{Grades@{Grades}!````~Grades@{$\sim$\+Grades}}
+\index{````~Grades@{$\sim$\+Grades}!Grades@{Grades}}
+\subsubsection{\texorpdfstring{$\sim$\+Grades()}{~Grades()}}
+{\footnotesize\ttfamily Grades\+::$\sim$\+Grades (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Class destructor that cleans up dynamically allocated memory for std\+ID and grade arrays 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classGrades_a21957de7c89d7e51ef85b9d41d1264ef}\label{classGrades_a21957de7c89d7e51ef85b9d41d1264ef}} 
+\index{Grades@{Grades}!display\+Grades@{display\+Grades}}
+\index{display\+Grades@{display\+Grades}!Grades@{Grades}}
+\subsubsection{\texorpdfstring{display\+Grades()}{displayGrades()}}
+{\footnotesize\ttfamily template$<$typename Func $>$ \\
+void Grades\+::display\+Grades (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os,  }\item[{Func}]{func }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Class member template function that recieves a function and an ostream object reference and prints out the file details with the corresponding grade letter. \mbox{\Hypertarget{classGrades_aa2979504b1668bd2d28d70c76697dd4d}\label{classGrades_aa2979504b1668bd2d28d70c76697dd4d}} 
+\index{Grades@{Grades}!read\+Records@{read\+Records}}
+\index{read\+Records@{read\+Records}!Grades@{Grades}}
+\subsubsection{\texorpdfstring{read\+Records()}{readRecords()}}
+{\footnotesize\ttfamily void Grades\+::read\+Records (\begin{DoxyParamCaption}\item[{const char $\ast$}]{a\+File,  }\item[{bool}]{save = {\ttfamily false} }\end{DoxyParamCaption})}
+
+Class member function that reads a file and saves the contents depending on the boolean argument passed as a parameter. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Grades.\+h\item 
+Grades.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,86 @@
+\hypertarget{classw7_1_1Product}{}\section{w7\+:\+:Product Class Reference}
+\label{classw7_1_1Product}\index{w7\+::\+Product@{w7\+::\+Product}}
+
+
+{\ttfamily \#include $<$Product.\+h$>$}
+
+Inheritance diagram for w7\+:\+:Product\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classw7_1_1Product}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classw7_1_1Product_a716e2427e981bfd738f6c9c49d0c3ced}{Product}} ()
+\item 
+\mbox{\hyperlink{classw7_1_1Product_aa5d91c860fae799ab80865c41508fd59}{Product}} (unsigned \+\_\+prod, float \+\_\+cost)
+\item 
+\mbox{\hyperlink{classw7_1_1Product_adeb7d71bf940bb585977fe07a772190b}{$\sim$\+Product}} ()
+\item 
+double \mbox{\hyperlink{classw7_1_1Product_a6d73613659451d1492541ef3d0d016b7}{get\+Charge}} () const
+\item 
+void \mbox{\hyperlink{classw7_1_1Product_a60b146f19a712d3eadd1b93a48c54e7d}{display}} (std\+::ostream \&) const
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\mbox{\hyperlink{classw7_1_1Product}{Product}} class which inherits from \mbox{\hyperlink{classw7_1_1iProduct}{i\+Product}} interface 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classw7_1_1Product_a716e2427e981bfd738f6c9c49d0c3ced}\label{classw7_1_1Product_a716e2427e981bfd738f6c9c49d0c3ced}} 
+\index{w7\+::\+Product@{w7\+::\+Product}!Product@{Product}}
+\index{Product@{Product}!w7\+::\+Product@{w7\+::\+Product}}
+\subsubsection{\texorpdfstring{Product()}{Product()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily w7\+::\+Product\+::\+Product (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Default constructor that initializes object to an empty state \mbox{\Hypertarget{classw7_1_1Product_aa5d91c860fae799ab80865c41508fd59}\label{classw7_1_1Product_aa5d91c860fae799ab80865c41508fd59}} 
+\index{w7\+::\+Product@{w7\+::\+Product}!Product@{Product}}
+\index{Product@{Product}!w7\+::\+Product@{w7\+::\+Product}}
+\subsubsection{\texorpdfstring{Product()}{Product()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily w7\+::\+Product\+::\+Product (\begin{DoxyParamCaption}\item[{unsigned}]{\+\_\+prod,  }\item[{float}]{\+\_\+cost }\end{DoxyParamCaption})}
+
+Constructor which recieves an unsigned integer and float datatype to initialize the object based on the given parameters. \mbox{\Hypertarget{classw7_1_1Product_adeb7d71bf940bb585977fe07a772190b}\label{classw7_1_1Product_adeb7d71bf940bb585977fe07a772190b}} 
+\index{w7\+::\+Product@{w7\+::\+Product}!````~Product@{$\sim$\+Product}}
+\index{````~Product@{$\sim$\+Product}!w7\+::\+Product@{w7\+::\+Product}}
+\subsubsection{\texorpdfstring{$\sim$\+Product()}{~Product()}}
+{\footnotesize\ttfamily w7\+::\+Product\+::$\sim$\+Product (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Default constructor with no dynamic data to handle. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classw7_1_1Product_a60b146f19a712d3eadd1b93a48c54e7d}\label{classw7_1_1Product_a60b146f19a712d3eadd1b93a48c54e7d}} 
+\index{w7\+::\+Product@{w7\+::\+Product}!display@{display}}
+\index{display@{display}!w7\+::\+Product@{w7\+::\+Product}}
+\subsubsection{\texorpdfstring{display()}{display()}}
+{\footnotesize\ttfamily void w7\+::\+Product\+::display (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Query member function which displays the details of the current object to the ostream object reference recieved. 
+
+Implements \mbox{\hyperlink{classw7_1_1iProduct_ad5aa580821cd5cac0acd07841019ed82}{w7\+::i\+Product}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classw7_1_1TaxableProduct_a57f8cd41d82054c77a7f7f1cf204cc7d}{w7\+::\+Taxable\+Product}}.
+
+\mbox{\Hypertarget{classw7_1_1Product_a6d73613659451d1492541ef3d0d016b7}\label{classw7_1_1Product_a6d73613659451d1492541ef3d0d016b7}} 
+\index{w7\+::\+Product@{w7\+::\+Product}!get\+Charge@{get\+Charge}}
+\index{get\+Charge@{get\+Charge}!w7\+::\+Product@{w7\+::\+Product}}
+\subsubsection{\texorpdfstring{get\+Charge()}{getCharge()}}
+{\footnotesize\ttfamily double w7\+::\+Product\+::get\+Charge (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Query member function that returns the cost of the current object. 
+
+Implements \mbox{\hyperlink{classw7_1_1iProduct_a4e9fde11cffac0e4309c89d252db89bb}{w7\+::i\+Product}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classw7_1_1TaxableProduct_a3f41864e2a88fa6d847b7fcb704f41f9}{w7\+::\+Taxable\+Product}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Product.\+h\item 
+Product.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,81 @@
+\hypertarget{classItem}{}\section{Item Class Reference}
+\label{classItem}\index{Item@{Item}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classItem_a878f8ff05023bb47d42bf2c2a98da323}{Item}} (const std\+::string \&=std\+::string())
+\item 
+bool \mbox{\hyperlink{classItem_a8a1745ce42e5695d5c63c62bd5be7d8e}{empty}} () const
+\item 
+\mbox{\hyperlink{classItem}{Item}} \& \mbox{\hyperlink{classItem_a818f9273ed8889c8b27cb97d2c292e77}{operator++}} (int)
+\item 
+unsigned int \mbox{\hyperlink{classItem_a359a6949cfad6cfb7f7d85e132525056}{get\+Code}} () const
+\item 
+const std\+::string \& \mbox{\hyperlink{classItem_a906722df9ab3f424d32c4106ff64aa15}{get\+Name}} () const
+\item 
+const std\+::string \& \mbox{\hyperlink{classItem_a67903e1bcdd09d0857295a33b5fbeb6b}{get\+Filler}} () const
+\item 
+const std\+::string \& \mbox{\hyperlink{classItem_a259c9f359ed2378aae4cbb5ea53bef18}{get\+Remover}} () const
+\item 
+void \mbox{\hyperlink{classItem_a9433e55e0165564bbbdb77bd01853728}{display}} (std\+::ostream \&, bool=false) const
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classItem_a878f8ff05023bb47d42bf2c2a98da323}\label{classItem_a878f8ff05023bb47d42bf2c2a98da323}} 
+\index{Item@{Item}!Item@{Item}}
+\index{Item@{Item}!Item@{Item}}
+\subsubsection{\texorpdfstring{Item()}{Item()}}
+{\footnotesize\ttfamily Item\+::\+Item (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str = {\ttfamily std\+:\+:string()} }\end{DoxyParamCaption})}
+
+Constructor that builds an \mbox{\hyperlink{classItem}{Item}} object from a string object ready to be parsed. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classItem_a9433e55e0165564bbbdb77bd01853728}\label{classItem_a9433e55e0165564bbbdb77bd01853728}} 
+\index{Item@{Item}!display@{display}}
+\index{display@{display}!Item@{Item}}
+\subsubsection{\texorpdfstring{display()}{display()}}
+{\footnotesize\ttfamily void Item\+::display (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os,  }\item[{bool}]{full = {\ttfamily false} }\end{DoxyParamCaption}) const}
+
+Member object that recieves a reference to an ostream object and displays an object based on the boolean value \mbox{\Hypertarget{classItem_a8a1745ce42e5695d5c63c62bd5be7d8e}\label{classItem_a8a1745ce42e5695d5c63c62bd5be7d8e}} 
+\index{Item@{Item}!empty@{empty}}
+\index{empty@{empty}!Item@{Item}}
+\subsubsection{\texorpdfstring{empty()}{empty()}}
+{\footnotesize\ttfamily bool Item\+::empty (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Query member function that returns true if the object is in an empty state. \mbox{\Hypertarget{classItem_a359a6949cfad6cfb7f7d85e132525056}\label{classItem_a359a6949cfad6cfb7f7d85e132525056}} 
+\index{Item@{Item}!get\+Code@{get\+Code}}
+\index{get\+Code@{get\+Code}!Item@{Item}}
+\subsubsection{\texorpdfstring{get\+Code()}{getCode()}}
+{\footnotesize\ttfamily unsigned int Item\+::get\+Code (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Query member function that returns the code value. \mbox{\Hypertarget{classItem_a67903e1bcdd09d0857295a33b5fbeb6b}\label{classItem_a67903e1bcdd09d0857295a33b5fbeb6b}} 
+\index{Item@{Item}!get\+Filler@{get\+Filler}}
+\index{get\+Filler@{get\+Filler}!Item@{Item}}
+\subsubsection{\texorpdfstring{get\+Filler()}{getFiller()}}
+{\footnotesize\ttfamily const std\+::string \& Item\+::get\+Filler (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Query member function that returns the filler of the current object. \mbox{\Hypertarget{classItem_a906722df9ab3f424d32c4106ff64aa15}\label{classItem_a906722df9ab3f424d32c4106ff64aa15}} 
+\index{Item@{Item}!get\+Name@{get\+Name}}
+\index{get\+Name@{get\+Name}!Item@{Item}}
+\subsubsection{\texorpdfstring{get\+Name()}{getName()}}
+{\footnotesize\ttfamily const std\+::string \& Item\+::get\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Query member function that returns the name of the current object. \mbox{\Hypertarget{classItem_a259c9f359ed2378aae4cbb5ea53bef18}\label{classItem_a259c9f359ed2378aae4cbb5ea53bef18}} 
+\index{Item@{Item}!get\+Remover@{get\+Remover}}
+\index{get\+Remover@{get\+Remover}!Item@{Item}}
+\subsubsection{\texorpdfstring{get\+Remover()}{getRemover()}}
+{\footnotesize\ttfamily const std\+::string \& Item\+::get\+Remover (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Query member function that returns the remover of the current object. \mbox{\Hypertarget{classItem_a818f9273ed8889c8b27cb97d2c292e77}\label{classItem_a818f9273ed8889c8b27cb97d2c292e77}} 
+\index{Item@{Item}!operator++@{operator++}}
+\index{operator++@{operator++}!Item@{Item}}
+\subsubsection{\texorpdfstring{operator++()}{operator++()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classItem}{Item}} \& Item\+::operator++ (\begin{DoxyParamCaption}\item[{int}]{ }\end{DoxyParamCaption})}
+
+Overloaded operator that increments the code and returns a reference to the current \mbox{\hyperlink{classItem}{Item}} object. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Item.\+h\item 
+Item.\+cpp\end{DoxyCompactItemize}

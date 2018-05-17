@@ -1,0 +1,65 @@
+\hypertarget{classw5_1_1Message}{}\section{w5\+:\+:Message Class Reference}
+\label{classw5_1_1Message}\index{w5\+::\+Message@{w5\+::\+Message}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classw5_1_1Message_aacab4dd9d90b0d5942e8ac0e6e0a722a}{Message}} ()
+\item 
+\mbox{\hyperlink{classw5_1_1Message_a669c79f1d7a90ee0a0f09516711481d4}{Message}} (std\+::ifstream \&in, char c)
+\item 
+\mbox{\hyperlink{classw5_1_1Message_a0d60457824644d8286e4805c04ebe193}{$\sim$\+Message}} ()
+\item 
+bool \mbox{\hyperlink{classw5_1_1Message_aeeb54ee5ef1fd404dfbf0c7ff3f1cbf7}{empty}} () const
+\item 
+void \mbox{\hyperlink{classw5_1_1Message_a9d438129067f04a078ae309d89bebb25}{display}} (std\+::ostream \&) const
+\item 
+bool \mbox{\hyperlink{classw5_1_1Message_acb21bb76b2afdb4e58823f8cf20ad762}{check\+Char}} (const std\+::string \&a\+String, char check) const
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classw5_1_1Message_aacab4dd9d90b0d5942e8ac0e6e0a722a}\label{classw5_1_1Message_aacab4dd9d90b0d5942e8ac0e6e0a722a}} 
+\index{w5\+::\+Message@{w5\+::\+Message}!Message@{Message}}
+\index{Message@{Message}!w5\+::\+Message@{w5\+::\+Message}}
+\subsubsection{\texorpdfstring{Message()}{Message()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily w5\+::\+Message\+::\+Message (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Default constructor that sets an empty state \mbox{\hyperlink{classw5_1_1Message}{Message}} object. \mbox{\Hypertarget{classw5_1_1Message_a669c79f1d7a90ee0a0f09516711481d4}\label{classw5_1_1Message_a669c79f1d7a90ee0a0f09516711481d4}} 
+\index{w5\+::\+Message@{w5\+::\+Message}!Message@{Message}}
+\index{Message@{Message}!w5\+::\+Message@{w5\+::\+Message}}
+\subsubsection{\texorpdfstring{Message()}{Message()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily w5\+::\+Message\+::\+Message (\begin{DoxyParamCaption}\item[{std\+::ifstream \&}]{in,  }\item[{char}]{c }\end{DoxyParamCaption})}
+
+Constructor that builds a message object using a parametered reference to a file stream object and character. Character parameter deduces at what character file readingn should stop.$\ast$ \mbox{\Hypertarget{classw5_1_1Message_a0d60457824644d8286e4805c04ebe193}\label{classw5_1_1Message_a0d60457824644d8286e4805c04ebe193}} 
+\index{w5\+::\+Message@{w5\+::\+Message}!````~Message@{$\sim$\+Message}}
+\index{````~Message@{$\sim$\+Message}!w5\+::\+Message@{w5\+::\+Message}}
+\subsubsection{\texorpdfstring{$\sim$\+Message()}{~Message()}}
+{\footnotesize\ttfamily w5\+::\+Message\+::$\sim$\+Message (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{classw5_1_1Message}{Message}} object Destructor. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classw5_1_1Message_acb21bb76b2afdb4e58823f8cf20ad762}\label{classw5_1_1Message_acb21bb76b2afdb4e58823f8cf20ad762}} 
+\index{w5\+::\+Message@{w5\+::\+Message}!check\+Char@{check\+Char}}
+\index{check\+Char@{check\+Char}!w5\+::\+Message@{w5\+::\+Message}}
+\subsubsection{\texorpdfstring{check\+Char()}{checkChar()}}
+{\footnotesize\ttfamily bool w5\+::\+Message\+::check\+Char (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{a\+String,  }\item[{char}]{check }\end{DoxyParamCaption}) const}
+
+Query member function that checks whether a specific character exists inside a string object. \mbox{\Hypertarget{classw5_1_1Message_a9d438129067f04a078ae309d89bebb25}\label{classw5_1_1Message_a9d438129067f04a078ae309d89bebb25}} 
+\index{w5\+::\+Message@{w5\+::\+Message}!display@{display}}
+\index{display@{display}!w5\+::\+Message@{w5\+::\+Message}}
+\subsubsection{\texorpdfstring{display()}{display()}}
+{\footnotesize\ttfamily void w5\+::\+Message\+::display (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{ }\end{DoxyParamCaption}) const}
+
+Query member function that displays Member object details and send it to a paramatered referenced ostream object \mbox{\Hypertarget{classw5_1_1Message_aeeb54ee5ef1fd404dfbf0c7ff3f1cbf7}\label{classw5_1_1Message_aeeb54ee5ef1fd404dfbf0c7ff3f1cbf7}} 
+\index{w5\+::\+Message@{w5\+::\+Message}!empty@{empty}}
+\index{empty@{empty}!w5\+::\+Message@{w5\+::\+Message}}
+\subsubsection{\texorpdfstring{empty()}{empty()}}
+{\footnotesize\ttfamily bool w5\+::\+Message\+::empty (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Query member function that returns true if the \mbox{\hyperlink{classw5_1_1Message}{Message}} object contains a message 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Message.\+h\item 
+Message.\+cpp\end{DoxyCompactItemize}

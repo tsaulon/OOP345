@@ -1,0 +1,51 @@
+\hypertarget{classOrderManager}{}\section{Order\+Manager Class Reference}
+\label{classOrderManager}\index{Order\+Manager@{Order\+Manager}}
+
+
+{\ttfamily \#include $<$Order\+Manager.\+h$>$}
+
+Inheritance diagram for Order\+Manager\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classOrderManager}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classCustomerOrder}{Customer\+Order}} \&\& \mbox{\hyperlink{classOrderManager_a2111b67d23078421bb0c012c25ee87f1}{extract}} ()
+\item 
+void \mbox{\hyperlink{classOrderManager_a5469cae831246813134630f8bd85db79}{validate}} (const \mbox{\hyperlink{classItemManager}{Item\+Manager}} \&, std\+::ostream \&)
+\item 
+void \mbox{\hyperlink{classOrderManager_a01ff4be0afbb0535de41d5caedcf0016}{display}} (std\+::ostream \&) const
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\mbox{\hyperlink{classOrderManager}{Order\+Manager}} object which derives from a vector class of datatype \mbox{\hyperlink{classCustomerOrder}{Customer\+Order}}. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classOrderManager_a01ff4be0afbb0535de41d5caedcf0016}\label{classOrderManager_a01ff4be0afbb0535de41d5caedcf0016}} 
+\index{Order\+Manager@{Order\+Manager}!display@{display}}
+\index{display@{display}!Order\+Manager@{Order\+Manager}}
+\subsubsection{\texorpdfstring{display()}{display()}}
+{\footnotesize\ttfamily void Order\+Manager\+::display (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os }\end{DoxyParamCaption}) const}
+
+Member function that outputs the descriptions of each customer order inside the base class to the ostream object reference parametered. \mbox{\Hypertarget{classOrderManager_a2111b67d23078421bb0c012c25ee87f1}\label{classOrderManager_a2111b67d23078421bb0c012c25ee87f1}} 
+\index{Order\+Manager@{Order\+Manager}!extract@{extract}}
+\index{extract@{extract}!Order\+Manager@{Order\+Manager}}
+\subsubsection{\texorpdfstring{extract()}{extract()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCustomerOrder}{Customer\+Order}} \&\& Order\+Manager\+::extract (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Member function that moves a \mbox{\hyperlink{classCustomerOrder}{Customer\+Order}} from the back of the base class container and returns that object as an r valued object. \mbox{\Hypertarget{classOrderManager_a5469cae831246813134630f8bd85db79}\label{classOrderManager_a5469cae831246813134630f8bd85db79}} 
+\index{Order\+Manager@{Order\+Manager}!validate@{validate}}
+\index{validate@{validate}!Order\+Manager@{Order\+Manager}}
+\subsubsection{\texorpdfstring{validate()}{validate()}}
+{\footnotesize\ttfamily void Order\+Manager\+::validate (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classItemManager}{Item\+Manager}} \&}]{obj,  }\item[{std\+::ostream \&}]{os }\end{DoxyParamCaption})}
+
+Member function that checks that the items requested are available. Appends a message if it is not available. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Order\+Manager.\+h\item 
+Order\+Manager.\+cpp\end{DoxyCompactItemize}

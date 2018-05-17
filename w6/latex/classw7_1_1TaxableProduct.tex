@@ -1,0 +1,86 @@
+\hypertarget{classw7_1_1TaxableProduct}{}\section{w7\+:\+:Taxable\+Product Class Reference}
+\label{classw7_1_1TaxableProduct}\index{w7\+::\+Taxable\+Product@{w7\+::\+Taxable\+Product}}
+
+
+{\ttfamily \#include $<$Taxable\+Product.\+h$>$}
+
+Inheritance diagram for w7\+:\+:Taxable\+Product\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classw7_1_1TaxableProduct}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{classw7_1_1TaxableProduct_a4685ed7e7a83db12a00c004b438e37eb}{Rate}} \{ {\bfseries H}, 
+{\bfseries P}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classw7_1_1TaxableProduct_a2e4fb43aefb12ca0778fc4f0a6ffb987}{Taxable\+Product}} (unsigned \+\_\+prod, float \+\_\+cost, char \+\_\+tax\+Status)
+\item 
+\mbox{\hyperlink{classw7_1_1TaxableProduct_ab9ee3a59e2483d33652ef4103f807e9a}{Taxable\+Product}} ()
+\item 
+double \mbox{\hyperlink{classw7_1_1TaxableProduct_a3f41864e2a88fa6d847b7fcb704f41f9}{get\+Charge}} () const
+\item 
+void \mbox{\hyperlink{classw7_1_1TaxableProduct_a57f8cd41d82054c77a7f7f1cf204cc7d}{display}} (std\+::ostream \&) const
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\mbox{\hyperlink{classw7_1_1TaxableProduct}{Taxable\+Product}} object that inherits from the \mbox{\hyperlink{classw7_1_1Product}{Product}} object. 
+
+\subsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{classw7_1_1TaxableProduct_a4685ed7e7a83db12a00c004b438e37eb}\label{classw7_1_1TaxableProduct_a4685ed7e7a83db12a00c004b438e37eb}} 
+\index{w7\+::\+Taxable\+Product@{w7\+::\+Taxable\+Product}!Rate@{Rate}}
+\index{Rate@{Rate}!w7\+::\+Taxable\+Product@{w7\+::\+Taxable\+Product}}
+\subsubsection{\texorpdfstring{Rate}{Rate}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{classw7_1_1TaxableProduct_a4685ed7e7a83db12a00c004b438e37eb}{w7\+::\+Taxable\+Product\+::\+Rate}}}
+
+Enumerator to differentiate H\+ST and P\+ST for readability and my own experiment. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classw7_1_1TaxableProduct_a2e4fb43aefb12ca0778fc4f0a6ffb987}\label{classw7_1_1TaxableProduct_a2e4fb43aefb12ca0778fc4f0a6ffb987}} 
+\index{w7\+::\+Taxable\+Product@{w7\+::\+Taxable\+Product}!Taxable\+Product@{Taxable\+Product}}
+\index{Taxable\+Product@{Taxable\+Product}!w7\+::\+Taxable\+Product@{w7\+::\+Taxable\+Product}}
+\subsubsection{\texorpdfstring{Taxable\+Product()}{TaxableProduct()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily w7\+::\+Taxable\+Product\+::\+Taxable\+Product (\begin{DoxyParamCaption}\item[{unsigned}]{\+\_\+prod,  }\item[{float}]{\+\_\+cost,  }\item[{char}]{\+\_\+tax\+Status }\end{DoxyParamCaption})}
+
+Constructor that initializes the object using a parametered unsigned integer, float datatype, and char datatype. \mbox{\Hypertarget{classw7_1_1TaxableProduct_ab9ee3a59e2483d33652ef4103f807e9a}\label{classw7_1_1TaxableProduct_ab9ee3a59e2483d33652ef4103f807e9a}} 
+\index{w7\+::\+Taxable\+Product@{w7\+::\+Taxable\+Product}!Taxable\+Product@{Taxable\+Product}}
+\index{Taxable\+Product@{Taxable\+Product}!w7\+::\+Taxable\+Product@{w7\+::\+Taxable\+Product}}
+\subsubsection{\texorpdfstring{Taxable\+Product()}{TaxableProduct()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily w7\+::\+Taxable\+Product\+::\+Taxable\+Product (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Default constructor which initializes the object to an empty state. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classw7_1_1TaxableProduct_a57f8cd41d82054c77a7f7f1cf204cc7d}\label{classw7_1_1TaxableProduct_a57f8cd41d82054c77a7f7f1cf204cc7d}} 
+\index{w7\+::\+Taxable\+Product@{w7\+::\+Taxable\+Product}!display@{display}}
+\index{display@{display}!w7\+::\+Taxable\+Product@{w7\+::\+Taxable\+Product}}
+\subsubsection{\texorpdfstring{display()}{display()}}
+{\footnotesize\ttfamily void w7\+::\+Taxable\+Product\+::display (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Query member function that outputs the object\textquotesingle{}s details to the parametered ostream object reference. 
+
+Reimplemented from \mbox{\hyperlink{classw7_1_1Product_a60b146f19a712d3eadd1b93a48c54e7d}{w7\+::\+Product}}.
+
+\mbox{\Hypertarget{classw7_1_1TaxableProduct_a3f41864e2a88fa6d847b7fcb704f41f9}\label{classw7_1_1TaxableProduct_a3f41864e2a88fa6d847b7fcb704f41f9}} 
+\index{w7\+::\+Taxable\+Product@{w7\+::\+Taxable\+Product}!get\+Charge@{get\+Charge}}
+\index{get\+Charge@{get\+Charge}!w7\+::\+Taxable\+Product@{w7\+::\+Taxable\+Product}}
+\subsubsection{\texorpdfstring{get\+Charge()}{getCharge()}}
+{\footnotesize\ttfamily double w7\+::\+Taxable\+Product\+::get\+Charge (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Query member fucntion which returns the charge of the current object multiplied by the type of tax rating. 
+
+Reimplemented from \mbox{\hyperlink{classw7_1_1Product_a6d73613659451d1492541ef3d0d016b7}{w7\+::\+Product}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Taxable\+Product.\+h\item 
+Taxable\+Product.\+cpp\end{DoxyCompactItemize}

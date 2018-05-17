@@ -1,0 +1,375 @@
+Script started on Wed 04 Apr 2018 07:51:04 PM EDT
+thsaulon@matrix:~/Courses/OOP345/MS3> whoami
+thsaulon
+thsaulon@matrix:~/Courses/OOP345/MS3> Customer[K[K[K[K[K[K[K[KTaskManager.cp[K[K[K[K[K[K[K[K[K[K[K[K[K[Kcat TaskManager.cpp[K[K[Kp[Kcpp
+#include <algorithm>
+#include "TaskManager.h"
+#include "Task.h"
+#include "Item.h"
+#include "ItemManager.h"
+
+void TaskManager::validate(std::ostream& os)
+{
+	bool flag_1 = true;
+
+	//std::vector<Task>::iterator i = this->begin()
+	//auto feels shorter so...
+	for (auto i = this->begin(); i != this->end() && flag_1; i++)
+	{
+		bool flag_2 = true;
+		for (size_t ii = 0; ii < this->size() && flag_2; ii++)
+		{
+			if (i->validate(this->at(ii))) { flag_2 = false; };
+
+			flag_1 = !flag_2;
+		}
+	}
+
+	if (!flag_1)
+	{
+		os << "Not all Tasks have been validated" << std::endl;
+	}
+}
+
+void TaskManager::validate(const ItemManager& obj, std::ostream& os)
+{
+
+	//1: Check tasks assigned exist in the base class container
+	for(auto i = obj.begin(); i != obj.end(); i++)
+	{
+		if (std::find_if(this->begin(), this->end(), [&](const Task& x) { return x.getName() != i->getRemover(); }) == this->end())
+		{
+			os << i->getRemover() << " is not available " << std::endl;
+		}
+	}
+}
+
+void TaskManager::display(std::ostream& os) const
+{
+	for (auto i = this->begin(); i != this->end(); i++)
+	{
+		i->display(os);
+	}
+}thsaulon@matrix:~/Courses/OOP345/MS3> cat Task[K[K[K[KItemManager.cpp
+#include "ItemManager.h"
+
+void ItemManager::display(std::ostream& os, bool full) const
+{
+	for (std::vector<Item>::const_iterator i = this->begin(); i != this->end(); i++)
+	{
+		i->display(os, full);
+	}
+}thsaulon@matrix:~/Courses/OOP345/MS3> cat ItemManager.cppTaskManager.cppItemManager.cpp[KOrderManager.cpp
+#include <algorithm>
+#include "OrderManager.h"
+#include "CustomerOrder.h"
+#include "ItemManager.h"
+
+CustomerOrder&& OrderManager::extract()
+{
+	return std::move(*this->end());
+}
+
+void OrderManager::validate(const ItemManager& obj, std::ostream& os)
+{
+	//iterate through base class vector
+	for (std::vector<CustomerOrder>::iterator i = this->begin(); i != this->end(); i++)
+	{
+		//iterate through orders
+		for (size_t ii = 0; ii < i->noOrders(); ii++)
+		{
+			//print message if item is unavailable.
+			if (std::find_if(obj.begin(), obj.end(), [&](const Item& item) { return item.getName() != (*i)[ii]; }) == obj.end())
+			{
+				os << (*i)[ii] << " is unavailable. " << std::endl;
+			}
+		}
+	}
+}
+
+void OrderManager::display(std::ostream& os) const
+{
+	for (std::vector<CustomerOrder>::const_iterator i = this->begin(); i < this->end(); i++)
+	{
+		i->display(os);
+	}
+}thsaulon@matrix:~/Courses/OOP345/MS3> cat m[KMilestone_3.cpp 
+// Manager Milestone - Main Program
+// Milestome_3.cpp
+// Chris Szalwinski
+// v1.0 - 16/11/2015
+// v2.0 - 15/01/2016
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <memory>
+#include "Task.h"
+#include "TaskManager.h"
+#include "CustomerOrder.h"
+#include "OrderManager.h"
+#include "Item.h"
+#include "ItemManager.h"
+#include "Utilities.h"
+
+template<typename M, typename T>
+void loadFromFile(const char*, M&, std::ostream&);
+template<>
+void loadFromFile<TaskManager, Task>(const char*, TaskManager&, std::ostream&);
+
+int main(int argc, char** argv) {
+	// process command line arguments
+	if (argc != 5) {
+		std::cerr << "*** invalid number of arguments ***\n"
+			<< "Usage: " << argv[0] << " tasks_file order_file item_file delimiter\n";
+		exit(1);
+	}
+	std::cout << "Command Line Arguments\n----------------------\n";
+	std::cout << "Task File Specified           = " << argv[1] << "\n";
+	std::cout << "Customer Order File Specified = " << argv[2] << "\n";
+	std::cout << "Item File Specified           = " << argv[3] << "\n";
+	std::cout << "File Record Field Delimiter   = " << argv[4][0] << "\n\n";
+	Utilities::setDelimiter(argv[4][0]);
+	// end of command line processing
+
+	// Load, accept, validate and display the Tasks
+	//
+	std::cout << "Building the Network of Tasks\n-----------------------------\n";
+	TaskManager taskManager;
+	loadFromFile<TaskManager, Task>(argv[1], taskManager, std::cerr);
+	taskManager.display(std::cout);
+	std::cout << "\nValidating the Set of Tasks\n---------------------------\n";
+	taskManager.validate(std::cerr);
+	std::cout << "\nList of Accepted Tasks\n----------------------\n";
+	taskManager.display(std::cout);
+
+	// Load, accept and display the Customer Orders
+	//
+	std::cout << "\n*** Load and Accept the Customer Orders ***\n";
+	OrderManager orderManager;
+	loadFromFile<OrderManager, CustomerOrder>(argv[2], orderManager, std::cerr);
+	std::cout << "\nList of Accepted Customer Orders\n--------------------------------\n";
+	orderManager.display(std::cout);
+
+	// Load, accept and display the Items in Stock
+	//
+	std::cout << "\n*** Load and accept the Items in Stock ***\n";
+	ItemManager itemManager;
+	loadFromFile<ItemManager, Item>(argv[3], itemManager, std::cerr);
+	std::cout << "\nList of In-Stock Items\n----------------------\n";
+	itemManager.display(std::cout, true);
+
+	// Validate the Items in the Customer Orders
+	orderManager.validate(itemManager, std::cout);
+
+	// Validate the Tasks in each Item in Stock
+	taskManager.validate(itemManager, std::cerr);
+
+	// Fill the Customer Orders with the Items in Stock
+	std::cout << "\n*** Fill the Customer Orders ***\n";
+	for (auto i = itemManager.begin(); i != itemManager.end(); i++) {
+		for (auto s = orderManager.begin(); s != orderManager.end(); s++)
+			s->fill(*i);
+	}
+
+	// Display the Processed Customer Orders
+	std::cout << "\nList of Processed Customer Orders\n---------------------------------\n";
+	orderManager.display(std::cout);
+
+	// Terminate
+	std::cout << "\nDone!\nPress Enter Key to Exit ... ";
+	char c;
+	std::cin.get(c);
+}
+
+template<typename M, typename T>
+void loadFromFile(const char* fileName, M& manager, std::ostream& os) {
+	std::ifstream file(fileName);
+	if (!file) {
+		os << "*** Cannot open file named " << fileName << " ***\n";
+		exit(1);
+	}
+	while (file) {
+		std::string record;
+		std::getline(file, record);
+		if (file) {
+			try {
+				std::unique_ptr<T> entry(new T(record));
+				if (!entry->empty())
+					manager.push_back(std::move(*entry));
+			}
+			catch (const std::string& msg) {
+				os << msg << std::endl;
+			}
+		}
+	}
+}
+
+template<>
+void loadFromFile<TaskManager, Task>(const char* fileName, TaskManager& manager, std::ostream& os) {
+	std::ifstream file(fileName);
+	if (!file) {
+		os << "*** Cannot open file named " << fileName << " ***\n";
+		exit(1);
+	}
+	while (file) {
+		std::string record;
+		std::getline(file, record);
+		if (file) {
+			try {
+				std::unique_ptr<Task> entry(new Task(record));
+				if (!entry->getName().empty())
+					manager.push_back(std::move(*entry));
+			}
+			catch (const std::string& msg) {
+				os << msg << std::endl;
+			}
+		}
+	}
+}
+thsaulon@matrix:~/Courses/OOP345/MS3> cat Milestone_3.cpp OrderManager.cpp[1PItemManager.cppTaskManager.cppwhoami[Kdoxygen Doxyfile-g[Kls[Kcat w6.txt[3@scrip[C[C[C[C[C[C[C[C[1Pw6 Sales.datls[Kclear[3Pw6g++ -o w6 -std=c++0x TaxableProduct.cpp w6..cpp Product.cpp Sale.cpp[A[C[C[C[C[C[C[C[C[C[C[C[C[Cls[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cclear[3Plsg++ -o w6 -std=c++0x TaxableProduct.cpp w6..cpp Product.cpp Sale.cpp[A[C[C[C[C[C[C[C[C[C[C[C[C[Cls[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccleard w6[3Plsmkdir w6ls[Kcd Courses/OOP345exit[Kcat w6.txtls[Kw6 Sales.dat g++ -o w6 -std=c++0x Product.cpp TaxableProoduct.cpp Sale.cpp w6.cpp [A[C[C[C[C[C[C[C[C[C[C[C[Ccat Sale.cpp[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[CTaxableProduct.cpp[7PProduct.cpp[9Pwhoamicat Task.hls[Kcd Courses/OOP345/MS1[2Pat NonPerishable.h[3PPerishable.hls[Kcat Perishable.hNonPerishable.hd Courses/OOP345/MS1ls[Kcat Task.h[4Pwhoamicat Product.cppTaxableProduct.cpp[10PSale.cppg++ -o w6 -std=c++0x Product.cpp TaxableProoduct.cpp Sale.cpp w6.cpp [A[C[C[C[C[C[C[C[C[C[C[C[Cw6 Sales.dat [K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o w6 -std=c++0x Product.cpp TaxableProoduct.cpp Sale.cpp w6.cpp [A[C[C[C[C[C[C[C[C[C[C[C[Ccat Sale.cpp[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[CTaxableProduct.cpp[7PProduct.cpp[9Pwhoamicat Task.hls[Kcd Courses/OOP345/MS1[2Pat NonPerishable.h[3PPerishable.hls[Kcd Courses/OOP244/MS4lear[Kscript ms2.txtls[Kcleardoxygen Doxyfile-g[Kls[Kg++ -o ms2 -std=c++0x Task.cpp Utilities.cppp Item.cpp CustomerItem.cpp CustomerOrder.cpp Milestone_2.cpp [Als[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o ms2 -std=c++0x Task.cpp Utilities.cppp Item.cpp CustomerItem.cpp CustomerOrder.cpp Milestone_2.cpp [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Als[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg++ -o ms2 -std=c++0x Task.cpp Utilities.cppp Item.cpp CustomerItem.cpp CustomerOrder.cpp [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C -std=c++0x Task.cpp Utilities.cpp[1P[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C3 -std=c++0x Task.cpp Utilities.cp[1@p[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[COrderManager.cpp ItemManager.cpp  TaskManager.cpp Milestone_3.cpp 
+thsaulon@matrix:~/Courses/OOP345/MS3> ms3 TaskList_Whitespace.dat CustomerOrders _Whitespace.dat ItemList_Whitespace.dat "|"
+Command Line Arguments
+----------------------
+Task File Specified           = TaskList_Whitespace.dat
+Customer Order File Specified = CustomerOrders_Whitespace.dat
+Item File Specified           = ItemList_Whitespace.dat
+File Record Field Delimiter   = |
+
+Building the Network of Tasks
+-----------------------------
+Task Name    : [Power Supply]    [4]
+ Continue to : [Motherboard]      *** to be validated ***
+Task Name    : [Motherboard]     [3]
+ Continue to : [CPU]              *** to be validated ***
+ Redirect to : [Remove CPU]       *** to be validated ***
+Task Name    : [Remove CPU]      [1]
+ Continue to : [CPU]              *** to be validated ***
+Task Name    : [CPU]             [5]
+ Continue to : [Memory]           *** to be validated ***
+ Redirect to : [Remove CPU]       *** to be validated ***
+Task Name    : [Remove CPU]      [1]
+ Continue to : [CPU]              *** to be validated ***
+Task Name    : [Memory]          [4]
+ Continue to : [SSD]              *** to be validated ***
+ Redirect to : [Remove Memory]    *** to be validated ***
+Task Name    : [Remove Memory]   [1]
+ Continue to : [Memory]           *** to be validated ***
+Task Name    : [SSD]             [4]
+ Continue to : [GPU]              *** to be validated ***
+ Redirect to : [Remove SSD]       *** to be validated ***
+Task Name    : [Remove SSD]      [1]
+ Continue to : [SSD]              *** to be validated ***
+Task Name    : [GPU]             [3]
+ Continue to : [Test]             *** to be validated ***
+Task Name    : [Test]            [4]
+ Continue to : [Approve]          *** to be validated ***
+ Redirect to : [Repair]           *** to be validated ***
+Task Name    : [Repair]          [1]
+Task Name    : [Approve]         [1]
+
+Validating the Set of Tasks
+---------------------------
+
+List of Accepted Tasks
+----------------------
+Task Name    : [Power Supply]    [4]
+ Continue to : [Motherboard]     
+Task Name    : [Motherboard]     [3]
+ Continue to : [CPU]             
+ Redirect to : [Remove CPU]      
+Task Name    : [Remove CPU]      [1]
+ Continue to : [CPU]             
+Task Name    : [CPU]             [5]
+ Continue to : [Memory]          
+ Redirect to : [Remove CPU]      
+Task Name    : [Remove CPU]      [1]
+ Continue to : [CPU]             
+Task Name    : [Memory]          [4]
+ Continue to : [SSD]             
+ Redirect to : [Remove Memory]   
+Task Name    : [Remove Memory]   [1]
+ Continue to : [Memory]          
+Task Name    : [SSD]             [4]
+ Continue to : [GPU]             
+ Redirect to : [Remove SSD]      
+Task Name    : [Remove SSD]      [1]
+ Continue to : [SSD]             
+Task Name    : [GPU]             [3]
+ Continue to : [Test]            
+Task Name    : [Test]            [4]
+ Continue to : [Approve]         
+ Redirect to : [Repair]          
+Task Name    : [Repair]          [1]
+Task Name    : [Approve]         [1]
+
+*** Load and Accept the Customer Orders ***
+
+List of Accepted Customer Orders
+--------------------------------
+Fardad Soleimanloo : Dell Precision 3600
+- [00000] CPU
+- [00000] Memory
+- [00000] Memory
+Joseph Hughes :    HP Z230            
+- [00000] CPU
+- [00000] Memory
+Chris Szalwinski : HP Z350            
+- [00000] CPU
+- [00000] Memory
+- [00000] SSD
+- [00000] GPU
+Elliott Coleshill : HP Apollo 1000     
+- [00000] CPU
+- [00000] MEMORY
+- [00000] Power Supply
+- [00000] GPU
+
+*** Load and accept the Items in Stock ***
+
+List of In-Stock Items
+----------------------
+CPU                    [00300] From CPU               To Remove CPU         
+                             : Central Processing Unit
+Memory                 [00400] From Memory            To Remove Memory      
+                             : Samsung Memory Stick
+GPU                    [00500] From GPU               To Remove GPU         
+                             : Nvidia Geforce 750M
+Power Supply           [00100] From Power Supply      To Remove Power Supply
+                             : no detailed description
+
+*** Fill the Customer Orders ***
+
+List of Processed Customer Orders
+---------------------------------
+Fardad Soleimanloo : Dell Precision 3600
++ [00300] CPU
++ [00400] Memory
++ [00401] Memory
+Joseph Hughes :    HP Z230            
++ [00301] CPU
++ [00402] Memory
+Chris Szalwinski : HP Z350            
++ [00302] CPU
++ [00403] Memory
+- [00000] SSD
++ [00500] GPU
+Elliott Coleshill : HP Apollo 1000     
++ [00303] CPU
+- [00000] MEMORY
++ [00100] Power Supply
++ [00501] GPU
+
+Done!
+Press Enter Key to Exit ... 
+thsaulon@matrix:~/Courses/OOP345/MS3> exit
+exit
+
+Script done on Wed 04 Apr 2018 07:53:52 PM EDT

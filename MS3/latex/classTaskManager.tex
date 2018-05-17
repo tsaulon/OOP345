@@ -1,0 +1,51 @@
+\hypertarget{classTaskManager}{}\section{Task\+Manager Class Reference}
+\label{classTaskManager}\index{Task\+Manager@{Task\+Manager}}
+
+
+{\ttfamily \#include $<$Task\+Manager.\+h$>$}
+
+Inheritance diagram for Task\+Manager\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classTaskManager}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classTaskManager_a2ae3c30ca4e030440b64c383cbda8a73}{validate}} (std\+::ostream \&)
+\item 
+void \mbox{\hyperlink{classTaskManager_a59aea57b2ad273d6d95797f93d737fa0}{validate}} (const \mbox{\hyperlink{classItemManager}{Item\+Manager}} \&, std\+::ostream \&)
+\item 
+void \mbox{\hyperlink{classTaskManager_a3564901af8fa7498b0fcca85fcaa5e64}{display}} (std\+::ostream \&) const
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\mbox{\hyperlink{classTaskManager}{Task\+Manager}} object that manages it\textquotesingle{}s vector object base class populated with \mbox{\hyperlink{classTask}{Task}} objects. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classTaskManager_a3564901af8fa7498b0fcca85fcaa5e64}\label{classTaskManager_a3564901af8fa7498b0fcca85fcaa5e64}} 
+\index{Task\+Manager@{Task\+Manager}!display@{display}}
+\index{display@{display}!Task\+Manager@{Task\+Manager}}
+\subsubsection{\texorpdfstring{display()}{display()}}
+{\footnotesize\ttfamily void Task\+Manager\+::display (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os }\end{DoxyParamCaption}) const}
+
+Member function that outputs descriptions of the tasks stored in the base class. \mbox{\Hypertarget{classTaskManager_a2ae3c30ca4e030440b64c383cbda8a73}\label{classTaskManager_a2ae3c30ca4e030440b64c383cbda8a73}} 
+\index{Task\+Manager@{Task\+Manager}!validate@{validate}}
+\index{validate@{validate}!Task\+Manager@{Task\+Manager}}
+\subsubsection{\texorpdfstring{validate()}{validate()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Task\+Manager\+::validate (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os }\end{DoxyParamCaption})}
+
+Member function that validates a task against all tasks inside the base class and appends a message if it is not validated. \mbox{\Hypertarget{classTaskManager_a59aea57b2ad273d6d95797f93d737fa0}\label{classTaskManager_a59aea57b2ad273d6d95797f93d737fa0}} 
+\index{Task\+Manager@{Task\+Manager}!validate@{validate}}
+\index{validate@{validate}!Task\+Manager@{Task\+Manager}}
+\subsubsection{\texorpdfstring{validate()}{validate()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Task\+Manager\+::validate (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classItemManager}{Item\+Manager}} \&}]{obj,  }\item[{std\+::ostream \&}]{os }\end{DoxyParamCaption})}
+
+Member function that tasks to handle the \mbox{\hyperlink{classItemManager}{Item\+Manager}} object reference exist within the base class. Appends a message if the task does not exist. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Task\+Manager.\+h\item 
+Task\+Manager.\+cpp\end{DoxyCompactItemize}

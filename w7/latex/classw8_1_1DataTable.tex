@@ -1,0 +1,80 @@
+\hypertarget{classw8_1_1DataTable}{}\section{w8\+:\+:Data\+Table$<$ T $>$ Class Template Reference}
+\label{classw8_1_1DataTable}\index{w8\+::\+Data\+Table$<$ T $>$@{w8\+::\+Data\+Table$<$ T $>$}}
+
+
+{\ttfamily \#include $<$Data\+Table.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classw8_1_1DataTable_a3d0250d377c570935b96f063a7aad7ea}{Data\+Table}} (std\+::ifstream \&fs, unsigned width, unsigned decimals)
+\item 
+T \mbox{\hyperlink{classw8_1_1DataTable_a39deb646a7ce0e6a91a24d422113f693}{mean}} () const
+\item 
+T \mbox{\hyperlink{classw8_1_1DataTable_a0117321b63383aa310a9034662e25d8b}{sigma}} () const
+\item 
+T \mbox{\hyperlink{classw8_1_1DataTable_a70bf19f3fe4003c0ebaee0f978a7ab5f}{median}} () const
+\item 
+void \mbox{\hyperlink{classw8_1_1DataTable_a258b4c9bcac9a4eb60cb7e6f1131cf5f}{regression}} (T \&slope, T \&y\+\_\+intercept) const
+\item 
+void \mbox{\hyperlink{classw8_1_1DataTable_a5f12eff627602dbff8e3f8a039557fb3}{display}} (std\+::ostream \&os) const
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class w8\+::\+Data\+Table$<$ T $>$}
+
+Templated class \mbox{\hyperlink{classw8_1_1DataTable}{Data\+Table}} that holds a dataset of xy coordinates. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classw8_1_1DataTable_a3d0250d377c570935b96f063a7aad7ea}\label{classw8_1_1DataTable_a3d0250d377c570935b96f063a7aad7ea}} 
+\index{w8\+::\+Data\+Table@{w8\+::\+Data\+Table}!Data\+Table@{Data\+Table}}
+\index{Data\+Table@{Data\+Table}!w8\+::\+Data\+Table@{w8\+::\+Data\+Table}}
+\subsubsection{\texorpdfstring{Data\+Table()}{DataTable()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classw8_1_1DataTable}{w8\+::\+Data\+Table}}$<$ T $>$\+::\mbox{\hyperlink{classw8_1_1DataTable}{Data\+Table}} (\begin{DoxyParamCaption}\item[{std\+::ifstream \&}]{fs,  }\item[{unsigned}]{width,  }\item[{unsigned}]{decimals }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\hyperlink{classw8_1_1DataTable}{Data\+Table}} constructor that recieves a reference to an fstream object, and two unsigned integers for width formatting and decimal places to output. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classw8_1_1DataTable_a5f12eff627602dbff8e3f8a039557fb3}\label{classw8_1_1DataTable_a5f12eff627602dbff8e3f8a039557fb3}} 
+\index{w8\+::\+Data\+Table@{w8\+::\+Data\+Table}!display@{display}}
+\index{display@{display}!w8\+::\+Data\+Table@{w8\+::\+Data\+Table}}
+\subsubsection{\texorpdfstring{display()}{display()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classw8_1_1DataTable}{w8\+::\+Data\+Table}}$<$ T $>$\+::display (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Member query function that displays the the \mbox{\hyperlink{classw8_1_1DataTable}{Data\+Table}} object details to the referenced ostream object received. \mbox{\Hypertarget{classw8_1_1DataTable_a39deb646a7ce0e6a91a24d422113f693}\label{classw8_1_1DataTable_a39deb646a7ce0e6a91a24d422113f693}} 
+\index{w8\+::\+Data\+Table@{w8\+::\+Data\+Table}!mean@{mean}}
+\index{mean@{mean}!w8\+::\+Data\+Table@{w8\+::\+Data\+Table}}
+\subsubsection{\texorpdfstring{mean()}{mean()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T \mbox{\hyperlink{classw8_1_1DataTable}{w8\+::\+Data\+Table}}$<$ T $>$\+::mean (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Member function query that returns the mean or average of all y values. \mbox{\Hypertarget{classw8_1_1DataTable_a70bf19f3fe4003c0ebaee0f978a7ab5f}\label{classw8_1_1DataTable_a70bf19f3fe4003c0ebaee0f978a7ab5f}} 
+\index{w8\+::\+Data\+Table@{w8\+::\+Data\+Table}!median@{median}}
+\index{median@{median}!w8\+::\+Data\+Table@{w8\+::\+Data\+Table}}
+\subsubsection{\texorpdfstring{median()}{median()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T \mbox{\hyperlink{classw8_1_1DataTable}{w8\+::\+Data\+Table}}$<$ T $>$\+::median (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Member function query that returns the median of the dataset. \mbox{\Hypertarget{classw8_1_1DataTable_a258b4c9bcac9a4eb60cb7e6f1131cf5f}\label{classw8_1_1DataTable_a258b4c9bcac9a4eb60cb7e6f1131cf5f}} 
+\index{w8\+::\+Data\+Table@{w8\+::\+Data\+Table}!regression@{regression}}
+\index{regression@{regression}!w8\+::\+Data\+Table@{w8\+::\+Data\+Table}}
+\subsubsection{\texorpdfstring{regression()}{regression()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classw8_1_1DataTable}{w8\+::\+Data\+Table}}$<$ T $>$\+::regression (\begin{DoxyParamCaption}\item[{T \&}]{slope,  }\item[{T \&}]{y\+\_\+intercept }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Member query function that calculates and sets the value inside the received referenced slope and y\+\_\+intercept of datatype T \mbox{\Hypertarget{classw8_1_1DataTable_a0117321b63383aa310a9034662e25d8b}\label{classw8_1_1DataTable_a0117321b63383aa310a9034662e25d8b}} 
+\index{w8\+::\+Data\+Table@{w8\+::\+Data\+Table}!sigma@{sigma}}
+\index{sigma@{sigma}!w8\+::\+Data\+Table@{w8\+::\+Data\+Table}}
+\subsubsection{\texorpdfstring{sigma()}{sigma()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T \mbox{\hyperlink{classw8_1_1DataTable}{w8\+::\+Data\+Table}}$<$ T $>$\+::sigma (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Member function query that returns the standard deviation of the dataset. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Data\+Table.\+h\end{DoxyCompactItemize}
